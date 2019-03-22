@@ -1,0 +1,16 @@
+{
+    "name": "sourcetoad/audit-logger",
+    "description": "Creating an audit of activity throughout an application.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Connor Tumbleson",
+            "email": "connor@sourcetoad.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1.3"
+    }
+}
