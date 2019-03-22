@@ -2,3 +2,7 @@
 Thumbs.db
 .idea/*
 vendor/
+
+# composer
+composer.lock
+composer.phar
