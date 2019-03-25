@@ -22,7 +22,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Sourcetoad\\Logger\\Test\\": "tests"
+            "Sourcetoad\\Logger\\Test\\": "tests/"
         }
     },
     "extra": {
@@ -33,7 +33,6 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0.0",
-        "orchestra/testbench": "^3.6"
+        "phpunit/phpunit": "^7.0.0"
     }
 }

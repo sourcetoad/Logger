@@ -6,7 +6,7 @@ namespace Sourcetoad\Logger\Test;
 use Sourcetoad\Logger\LoggerFacade;
 use Sourcetoad\Logger\LoggerServiceProvider;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected function getPackageProviders($app)
     {
