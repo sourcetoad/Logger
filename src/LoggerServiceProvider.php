@@ -7,8 +7,22 @@ use Illuminate\Support\ServiceProvider;
 
 class LoggerServiceProvider extends ServiceProvider
 {
-    protected $listen = [
-
+    protected $listeners = [
+        \Illuminate\Auth\Events\Login::class => [
+            \Sourcetoad\Logger\Listeners\LogSuccessfulLogin::class,
+        ],
+        \Illuminate\Auth\Events\Failed::class => [
+            \Sourcetoad\Logger\Listeners\LogFailedLogin::class,
+        ],
+        \Illuminate\Auth\Events\Logout::class => [
+            \Sourcetoad\Logger\Listeners\LogExplicitLogout::class,
+        ],
+        \Illuminate\Auth\Events\Lockout::class => [
+            \Sourcetoad\Logger\Listeners\LogLockedLogins::class,
+        ],
+        \Illuminate\Auth\Events\PasswordReset::class => [
+            \Sourcetoad\Logger\Listeners\LogLockedLogins::class,
+        ],
     ];
 
     public function boot()
@@ -27,5 +41,16 @@ class LoggerServiceProvider extends ServiceProvider
         });
 
         $this->app->alias(Logger::class, 'logger');
+
+        $this->registerEventListeners();
+    }
+
+    private function registerEventListeners()
+    {
+        foreach ($this->listeners as $key => $listeners) {
+            foreach ($listeners as $listener) {
+                \Event::listen($key, $listener);
+            }
+        }
     }
 }
