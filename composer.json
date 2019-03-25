@@ -20,11 +20,20 @@
             "Sourcetoad\\Logger\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Sourcetoad\\Logger\\Test\\": "tests"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "Sourcetoad\\Logger\\LoggerServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0.0",
+        "orchestra/testbench": "^3.6"
     }
 }
