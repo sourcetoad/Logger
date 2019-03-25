@@ -5,8 +5,12 @@ namespace Sourcetoad\Logger;
 
 use Illuminate\Support\ServiceProvider;
 
-class ActivityLogServiceProvider extends ServiceProvider
+class LoggerServiceProvider extends ServiceProvider
 {
+    protected $listen = [
+
+    ];
+
     public function boot()
     {
         if ($this->app->runningInConsole()) {
@@ -18,6 +22,10 @@ class ActivityLogServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        $this->app->singleton(Logger::class, function() {
+            return new Logger();
+        });
+
+        $this->app->alias(Logger::class, 'logger');
     }
 }

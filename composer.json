@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Sourcetoad\\Logger\\ActivityLogServiceProvider"
+                "Sourcetoad\\Logger\\LoggerServiceProvider"
             ]
         }
     }
