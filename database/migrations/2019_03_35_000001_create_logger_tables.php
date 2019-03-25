@@ -18,7 +18,7 @@ class CreateLoggerTables extends Migration
         }
 
         Schema::create('audit_routes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->text('route');
             $table->string('route_hash', 32)->unique();
         });
@@ -31,8 +31,8 @@ class CreateLoggerTables extends Migration
 
         Schema::create('audit_activity', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('route_id', false, true);
-            $table->bigInteger('key_id', false, true);
+            $table->integer('route_id', false, true);
+            $table->bigInteger('key_id', false, true)->nullable(true);
             $table->integer('user_id', false, true)->nullable(true);
 
             $table->tinyInteger('type', false, true);
@@ -48,6 +48,12 @@ class CreateLoggerTables extends Migration
                 ->foreign('route_id')
                 ->references('id')
                 ->on('audit_routes')
+                ->onDelete('RESTRICT');
+
+            $table
+                ->foreign('key_id')
+                ->references('id')
+                ->on('audit_keys')
                 ->onDelete('RESTRICT');
         });
 
