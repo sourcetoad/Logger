@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $route_id
  * @property int $key_id
  * @property int $user_id
+ * @property int|null $entity_type
+ * @property int|null $entity_id
  * @property int $type
  * @property string $ip_address
  * @property Carbon $created_at
@@ -28,7 +30,10 @@ class AuditActivity extends Model
         'route_id',
         'key_id',
         'user_id',
+        'entity_type',
+        'entity_id',
         'type',
+        'verb',
         'ip_address'
     ];
 
@@ -68,5 +73,10 @@ class AuditActivity extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function entity()
+    {
+        return $this->morphTo();
     }
 }
