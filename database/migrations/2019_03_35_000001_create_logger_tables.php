@@ -29,13 +29,17 @@ class CreateLoggerTables extends Migration
             $table->string('hash', 32)->unique();
         });
 
-        Schema::create('audit_activity', function (Blueprint $table) {
+        Schema::create('audit_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('route_id', false, true);
             $table->bigInteger('key_id', false, true)->nullable(true);
+            $table->integer('route_id', false, true);
             $table->integer('user_id', false, true)->nullable(true);
 
+            $table->integer('entity_type', false, true)->nullable(true);
+            $table->integer('entity_id', false, true)->nullable(true);
+
             $table->tinyInteger('type', false, true);
+            $table->tinyInteger('verb', false, true);
             $table->timestamps();
 
             $table
@@ -57,7 +61,7 @@ class CreateLoggerTables extends Migration
                 ->onDelete('RESTRICT');
         });
 
-        DB::statement('ALTER TABLE `audit_activity` ADD `ip_address` VARBINARY(16) AFTER `type`');
+        DB::statement('ALTER TABLE `audit_activities` ADD `ip_address` VARBINARY(16) AFTER `type`');
     }
 
     /**
@@ -70,7 +74,7 @@ class CreateLoggerTables extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::drop('audit_routes');
         Schema::drop('audit_keys');
-        Schema::drop('audit_activity');
+        Schema::drop('audit_activities');
         Schema::enableForeignKeyConstraints();
     }
 }
