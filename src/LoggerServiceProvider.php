@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class LoggerServiceProvider extends ServiceProvider
@@ -31,7 +32,10 @@ class LoggerServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/logger.php', 'activity-logger');
+        $this->mergeConfigFrom(__DIR__ . '/../config/logger.php', 'logger');
+        $this->publishes([
+            __DIR__  . '/../config/logger.php' => config_path('logger.php')
+        ], 'config');
     }
 
     public function register()
@@ -43,6 +47,13 @@ class LoggerServiceProvider extends ServiceProvider
         $this->app->alias(Logger::class, 'logger');
 
         $this->registerEventListeners();
+        $this->registerMorphMaps();
+    }
+
+    private function registerMorphMaps()
+    {
+        $morphables = config('logger.morphs');
+        Relation::morphMap($morphables, true);
     }
 
     private function registerEventListeners()
