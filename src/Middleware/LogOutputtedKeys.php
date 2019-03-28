@@ -29,6 +29,14 @@ class LogOutputtedKeys
      */
     public function terminate(Request $request, $response)
     {
+        $leadingStatusCodeNumber = substr((string) $response->getStatusCode(), 0, 1);
+
+        // If we got a 400 or 500. Toss them. We don't need to log errors, as they don't leak information
+        // (when properly setup)
+        if (in_array($leadingStatusCodeNumber, [4, 5])) {
+            return;
+        }
+
         $data = [];
         if ($response instanceof JsonResponse) {
             $data = $response->getData(true);
