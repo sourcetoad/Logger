@@ -35,9 +35,6 @@ class CreateLoggerTables extends Migration
             $table->integer('route_id', false, true);
             $table->integer('user_id', false, true)->nullable(true);
 
-            $table->integer('entity_type', false, true)->nullable(true);
-            $table->integer('entity_id', false, true)->nullable(true);
-
             $table->tinyInteger('type', false, true);
             $table->tinyInteger('verb', false, true);
             $table->timestamps();
@@ -62,6 +59,26 @@ class CreateLoggerTables extends Migration
         });
 
         DB::statement('ALTER TABLE `audit_activities` ADD `ip_address` VARBINARY(16) AFTER `type`');
+
+        Schema::create('audit_models', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('activity_id', false, true);
+            $table->mediumInteger('entity_type', false, true);
+            $table->integer('entity_id', false, true);
+            $table->integer('user_id', false, true)->nullable(true);
+
+            $table
+                ->foreign('activity_id')
+                ->references('id')
+                ->on('audit_activities')
+                ->onDelete('RESTRICT');
+
+            $table
+                ->foreign('user_id')
+                ->references(config('activity-logger.user.foreign_key', 'id'))
+                ->on(config('activity-logger.user.table', 'users'))
+                ->onDelete('RESTRICT');
+        });
     }
 
     /**
@@ -74,6 +91,7 @@ class CreateLoggerTables extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::drop('audit_routes');
         Schema::drop('audit_keys');
+        Schema::drop('audit_models');
         Schema::drop('audit_activities');
         Schema::enableForeignKeyConstraints();
     }
