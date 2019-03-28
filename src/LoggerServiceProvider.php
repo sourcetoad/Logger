@@ -6,6 +6,7 @@ namespace Sourcetoad\Logger;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Sourcetoad\Logger\Commands\AuditModelResolver;
 use Sourcetoad\Logger\Middleware\LogOutputtedKeys;
 
 class LoggerServiceProvider extends ServiceProvider
@@ -32,6 +33,7 @@ class LoggerServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+            $this->commands([AuditModelResolver::class]);
         }
 
         $this->mergeConfigFrom(__DIR__ . '/../config/logger.php', 'logger');
