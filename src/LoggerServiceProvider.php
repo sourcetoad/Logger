@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger;
 
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Sourcetoad\Logger\Middleware\LogOutputtedKeys;
 
 class LoggerServiceProvider extends ServiceProvider
 {
@@ -48,6 +50,12 @@ class LoggerServiceProvider extends ServiceProvider
 
         $this->registerEventListeners();
         $this->registerMorphMaps();
+        $this->registerMiddleware();
+    }
+
+    private function registerMiddleware()
+    {
+        app(Kernel::class)->pushMiddleware(LogOutputtedKeys::class);
     }
 
     private function registerMorphMaps()
