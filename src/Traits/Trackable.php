@@ -27,4 +27,9 @@ trait Trackable
             resolve(Logger::class)->logChangedModel($model, $keys);
         });
     }
+
+    public function customResolver(Model $model)
+    {
+        throw new \BadMethodCallException("This method needs to be implemented in the implemented class");
+    }
 }
