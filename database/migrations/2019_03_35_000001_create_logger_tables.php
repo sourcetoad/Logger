@@ -79,6 +79,28 @@ class CreateLoggerTables extends Migration
                 ->on(config('activity-logger.user.table', 'users'))
                 ->onDelete('RESTRICT');
         });
+
+        Schema::create('audit_changes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('activity_id', false, true);
+            $table->mediumInteger('entity_type', false, true);
+            $table->integer('entity_id', false, true);
+            $table->integer('user_id', false, true)->nullable(true);
+
+            $table->json('fields');
+
+            $table
+                ->foreign('activity_id')
+                ->references('id')
+                ->on('audit_activities')
+                ->onDelete('RESTRICT');
+
+            $table
+                ->foreign('user_id')
+                ->references(config('activity-logger.user.foreign_key', 'id'))
+                ->on(config('activity-logger.user.table', 'users'))
+                ->onDelete('RESTRICT');
+        });
     }
 
     /**
@@ -89,6 +111,7 @@ class CreateLoggerTables extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
+        Schema::drop('audit_changes');
         Schema::drop('audit_routes');
         Schema::drop('audit_keys');
         Schema::drop('audit_models');
