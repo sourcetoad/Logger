@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
 use Sourcetoad\Logger\Models\AuditActivity;
+use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditKey;
+use Sourcetoad\Logger\Models\AuditModel;
 use Sourcetoad\Logger\Models\AuditRoute;
 
 class Logger
 {
-    public function logSuccessfulLogin(Model $entity)
+    /** @var Model[] */
+    static $retrievedModels = [];
+
+    /** @var array */
+    static $changedModels = [];
+
+    public function logSuccessfulLogin()
     {
         $type = ActivityType::SUCCESSFUL_LOGIN;
 
@@ -22,10 +30,10 @@ class Logger
             'password_hash' => '',
         ];
 
-        return $this->logActivity($type, $keys, $entity);
+        return $this->logActivity($type, $keys);
     }
 
-    public function logExplicitLogout(Model $entity)
+    public function logExplicitLogout()
     {
         $type = ActivityType::FAILED_LOGIN;
 
@@ -34,28 +42,28 @@ class Logger
             'email' => '',
         ];
 
-        return $this->logActivity($type, $keys, $entity);
+        return $this->logActivity($type, $keys);
     }
 
-    public function logFailedLogin(Model $entity = null)
+    public function logFailedLogin()
     {
         $type = ActivityType::FAILED_LOGIN;
 
         $keys = [];
 
-        return $this->logActivity($type, $keys, $entity);
+        return $this->logActivity($type, $keys);
     }
 
-    public function logLockedLogin(Model $model = null)
+    public function logLockedLogin()
     {
         $type = ActivityType::LOCKED_OUT;
 
         $keys = [];
 
-        return $this->logActivity($type, $keys, $model);
+        return $this->logActivity($type, $keys);
     }
 
-    public function logPasswordReset(Model $model)
+    public function logPasswordReset()
     {
         $type = ActivityType::PASSWORD_CHANGE;
 
@@ -63,36 +71,102 @@ class Logger
             'password_hash' => ''
         ];
 
-        return $this->logActivity($type, $keys, $model);
+        return $this->logActivity($type, $keys);
     }
 
-    public function logActivity(int $type, array $keys = [], Model $entity = null)
+    public function logRetrievedModel(Model $model): void
+    {
+        static::$retrievedModels[] = $model;
+    }
+
+    public function logChangedModel(Model $model, array $fields): void
+    {
+        static::$changedModels[] = [
+            'model'  => $model,
+            'fields' => $fields,
+        ];
+    }
+
+    public function logActivity(int $type, array $keys = [])
     {
         $path = \Request::path();
+        $verb = $this->getHttpVerb(\Request::method());
+        $routeId = AuditRoute::createOrFind($path)->id;
+        $userId = \Request::user()->id ?? null;
+        $keyId = AuditKey::createOrFind($keys)->id;
+        $ipAddress = \Request::ip();
 
-        $morphableType = $morphableId = null;
-        if (! empty($entity)) {
-            $morphableType = $entity->getMorphClass();
-            $morphableId = $entity->getKey();
+        // If we have changed models. Make another entry for the changes.
+        if (! empty(self::$changedModels)) {
+            $data = [
+                'route_id'   => $routeId,
+                'key_id'     => $keyId,
+                'user_id'    => $userId,
+                'type'       => ActivityType::MODIFY_DATA,
+                'ip_address' => $ipAddress,
+                'verb'       => $verb,
+            ];
+
+            /** @var AuditActivity $activity */
+            $activity = AuditActivity::query()->create($data);
+
+            $data = [];
+            foreach (self::$changedModels as $changed) {
+                /** @var Model $model */
+                $model = $changed['model'];
+
+                $data[] = [
+                    'activity_id' => $activity->id,
+                    'entity_type' => $this->getNumericMorphMap($model),
+                    'entity_id'   => $model->getKey(),
+                    'fields'      => json_encode($changed['fields'])
+                ];
+            }
+
+            AuditChange::query()->insert($data);
+            self::$changedModels = [];
         }
 
         $data = [
-            'route_id'    => AuditRoute::createOrFind($path)->id,
-            'key_id'      => AuditKey::createOrFind($keys)->id,
-            'user_id'     => \Request::user()->id ?? null,
-            'entity_type' => $morphableType,
-            'entity_id'   => $morphableId,
+            'route_id'    => $routeId,
+            'key_id'      => $keyId,
+            'user_id'     => $userId,
             'type'        => $type,
-            'ip_address'  => \Request::ip(),
-            'verb'        => $this->getHttpVerb(\Request::method()),
+            'ip_address'  => $ipAddress,
+            'verb'        => $verb,
         ];
 
-        return AuditActivity::query()->create($data);
+        /** @var AuditActivity $activity */
+        $activity = AuditActivity::query()->create($data);
+
+        $data = [];
+        foreach (self::$retrievedModels as $model) {
+            $data[] = [
+                'activity_id' => $activity->id,
+                'entity_type' => $this->getNumericMorphMap($model),
+                'entity_id'   => $model->getKey()
+            ];
+        }
+        AuditModel::query()->insert($data);
+        self::$retrievedModels = [];
+
+        return $activity;
     }
 
     //--------------------------------------------------------------------------------------------------------------
     // Private functions
     //--------------------------------------------------------------------------------------------------------------
+
+    private function getNumericMorphMap(Model $model): int
+    {
+        $morphableTypeId = $model->getMorphClass();
+
+        if (is_numeric($morphableTypeId)) {
+            return $morphableTypeId;
+        }
+
+        throw new \InvalidArgumentException(get_class($model) . " has no numeric model map. Check `morphs` in Logger.");
+    }
 
     private function getHttpVerb(string $verb): int
     {
