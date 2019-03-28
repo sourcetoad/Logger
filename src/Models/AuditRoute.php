@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditRoute
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AuditRoute extends Model
 {
+    use Immutable;
+
     protected $fillable = [
         'route',
         'route_hash'

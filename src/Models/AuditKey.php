@@ -5,6 +5,7 @@ namespace Sourcetoad\Logger\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditKey
@@ -15,6 +16,8 @@ use Illuminate\Support\Arr;
  */
 class AuditKey extends Model
 {
+    use Immutable;
+
     protected $fillable = [
         'data',
         'hash',

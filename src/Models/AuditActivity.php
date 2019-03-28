@@ -6,6 +6,7 @@ namespace Sourcetoad\Logger\Models;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditActivity
@@ -26,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AuditActivity extends Model
 {
+    use Immutable;
+
     protected $fillable = [
         'route_id',
         'key_id',
