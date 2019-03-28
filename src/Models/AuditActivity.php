@@ -20,7 +20,6 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int $type
  * @property string $ip_address
  * @property Carbon $created_at
- * @property Carbon $updated_at
  * @property-read AuditRoute $route
  * @property-read AuditKey $key
  * @property-read User $user
@@ -41,8 +40,7 @@ class AuditActivity extends Model
     ];
 
     protected $dates = [
-        'created_at',
-        'updated_at'
+        'created_at'
     ];
 
     //--------------------------------------------------------------------------------------------------------------
@@ -57,6 +55,11 @@ class AuditActivity extends Model
     protected function getIpAddressAttribute($value)
     {
         return strtoupper(inet_ntop($value));
+    }
+
+    public function setUpdatedAtAttribute($value)
+    {
+        // Nothing
     }
     
     //--------------------------------------------------------------------------------------------------------------

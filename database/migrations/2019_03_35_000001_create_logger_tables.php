@@ -101,6 +101,10 @@ class CreateLoggerTables extends Migration
                 ->on(config('activity-logger.user.table', 'users'))
                 ->onDelete('RESTRICT');
         });
+
+        Schema::table('audit_activities', function (Blueprint $table) {
+            $table->dropColumn('updated_at');
+        });
     }
 
     /**
