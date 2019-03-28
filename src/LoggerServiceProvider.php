@@ -37,7 +37,7 @@ class LoggerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/logger.php', 'logger');
         $this->publishes([
             __DIR__  . '/../config/logger.php' => config_path('logger.php')
-        ], 'config');
+        ], 'logger');
     }
 
     public function register()
