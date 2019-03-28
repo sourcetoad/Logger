@@ -10,6 +10,6 @@ class LogLockedLogins
 {
     public function handle(Lockout $event)
     {
-        resolve(Logger::class)->logLockedLogin($event->request->user() ?? null);
+        resolve(Logger::class)->logLockedLogin();
     }
 }

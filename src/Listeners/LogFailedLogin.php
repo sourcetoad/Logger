@@ -10,6 +10,6 @@ class LogFailedLogin
 {
     public function handle(Failed $event)
     {
-        resolve(Logger::class)->logFailedLogin($event->user);
+        resolve(Logger::class)->logFailedLogin();
     }
 }

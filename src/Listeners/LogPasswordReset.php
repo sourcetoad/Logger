@@ -10,6 +10,6 @@ class LogPasswordReset
 {
     public function handle(PasswordReset $passwordReset)
     {
-        resolve(Logger::class)->logPasswordReset(\Auth::user());
+        resolve(Logger::class)->logPasswordReset();
     }
 }

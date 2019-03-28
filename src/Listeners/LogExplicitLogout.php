@@ -10,6 +10,8 @@ class LogExplicitLogout
 {
     public function handle(Logout $event)
     {
-        resolve(Logger::class)->logExplicitLogout($event->user);
+        resolve(Logger::class)->logExplicitLogout();
+
+        return true;
     }
 }
