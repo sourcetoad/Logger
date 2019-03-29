@@ -16,6 +16,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int $entity_id
  * @property int|null $user_id
  * @property-read User|null $user
+ * @property-read Model $entity
  */
 class AuditModel extends Model
 {
@@ -56,5 +57,10 @@ class AuditModel extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function entity()
+    {
+        return $this->morphTo();
     }
 }
