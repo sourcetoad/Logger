@@ -28,8 +28,8 @@ trait Trackable
         });
     }
 
-    public function customResolver(Model $model)
+    public function trackableUserResolver()
     {
-        throw new \BadMethodCallException("This method needs to be implemented in the implemented class");
+        throw new \BadMethodCallException("This method (trackableUserResolver) needs to be implemented in the implemented class: " . static::class);
     }
 }
