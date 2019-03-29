@@ -1,0 +1,14 @@
+version: '2'
+services:
+  logger-php:
+    container_name: sourcetoad_logger_php
+    environment:
+      XDEBUG_CONFIG: "remote_host=10.254.254.254"
+      PHP_IDE_CONFIG: "serverName=docker"
+    build: .
+    volumes:
+      - ../:/code
+    networks:
+      - logger-internal
+networks:
+  logger-internal:
