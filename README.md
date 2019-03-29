@@ -1,6 +1,25 @@
 # Sourcetoad Logger
 
-This package allows you to log important events, including what data is viewed by who.
+This package allows you to log important events, including what data is viewed by who. Including the following:
+
+ * Login Events
+ * Logout Events
+ * Locked Events
+ * Failed login attempt
+ * Password Change
+ * Attribute changes (except `created_at`/`updated_at`) for models with `Trackable` trait.
+ * Retrieval Events (Detecting what models were loaded during a request, of those with `Trackable` trait)
+ * Viewed Keys (Extracting keys in API requests to identify what could be viewed)
+ 
+This helps answer questions such as:
+
+ * Who accessed what information of this account and when?
+ * When did this person change their password?
+ * Who changed the information for this user?
+ * What IP was responsible for these changes?
+ 
+This plugin is additionally very slim, which makes installation more difficult than a regular plugin. This is because it is expected for perhaps legal reasons, that these logs may not be allowed to be removed for years. 
+This means that the method for storage must be efficient, unlike other packages which may specialize in auditing/logging but bloat database with information.
 
 ### Laravel
 
@@ -56,3 +75,28 @@ For models that may contain information that you wish to be notified was access/
 For this reason, we've developed the notion of custom resolvers. They must be implemented for each Entity tracked, which (if tracked) must be in the `morphs` table in the above settings.
 
 #### Custom Resolvers
+
+#### Cron
+These custom resolvers don't run as items are entered, due to the load increase. This should arguably be queued, but easier on implementations for a command (cron) system. Use the Laravel Scheduler to execute our command.
+
+```php
+    $schedule->command('logger:audit-resolver')
+        ->hourly()
+        ->withoutOverlapping();
+```
+
+This will run taking 200 items of both changes and retrieved models. It will identify the user associated with them. The functions for each individual model should be easy.
+
+```php
+    public function trackableUserResolver()
+    {
+        return $this->object->relation->user_id;
+    }
+```
+
+As you can see, we have to traverse whatever relation/property we need in order to relate the model at hand to a user. If there is no match, you probably shouldn't be logging it.
+
+## Roadmap
+1. Support for existing morphs.
+2. Support for a model that has no user associated with it.
+3. Support for Laravel 5.7, 5.8
