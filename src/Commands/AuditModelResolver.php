@@ -32,14 +32,26 @@ class AuditModelResolver extends Command
         AuditChange::query()->whereNull('user_id')->chunkById(200, function ($items) {
             /** @var AuditChange $item */
             foreach ($items as $item) {
-                //
+                $id = $item->entity->trackableUserResolver();
+
+                if (empty($id)) {
+                    $this->error(get_class($item->entity) . ' - ' . $item->entity_id . ' could not be resolved to a user_id.');
+                }
+                $item->user_id = $id;
+                $item->saveOrFail();
             }
         });
 
         AuditModel::query()->whereNull('user_id')->chunkById(200, function ($items) {
             /** @var AuditModel $item */
             foreach ($items as $item) {
-                //
+                $id = $item->entity->trackableUserResolver();
+
+                if (empty($id)) {
+                    $this->error(get_class($item->entity) . ' - ' . $item->entity_id . ' could not be resolved to a user_id.');
+                }
+                $item->user_id = $id;
+                $item->saveOrFail();
             }
         });
     }
