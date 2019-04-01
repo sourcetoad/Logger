@@ -17,6 +17,15 @@ return [
         'foreign_key' => 'id',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Morphs
+    |--------------------------------------------------------------------------
+    |
+    | A model to integer binding, so the compacted database can store ints
+    | vs larger data-types like fully qualified namespaces.
+    |
+    */
     'morphs' => [
         ModelMapping::USER => 'App\User'
     ]
