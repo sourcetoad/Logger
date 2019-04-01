@@ -12,3 +12,5 @@ services:
       - logger-internal
 networks:
   logger-internal:
+    external:
+      name: logger-internal
