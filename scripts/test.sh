@@ -8,5 +8,8 @@ cd ./docker
 docker-compose up --build -d
 cd ../
 
+# Install packages
+docker exec -i sourcetoad_logger_php /usr/local/bin/composer install
+
 # test process
 docker exec -i sourcetoad_logger_php ./vendor/bin/phpunit
