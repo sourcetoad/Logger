@@ -1,3 +1,7 @@
+# v1.0.2 (April 3, 2019)
+ * Fix event for PasswordReset.
+ * Add composer dependency on Laravel config().
+ 
 # v1.0.1 (April 3, 2019)
  * Add support for 'Illuminate\Http\Response`
  * Don't die out if unknown response detected.
