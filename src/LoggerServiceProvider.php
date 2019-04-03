@@ -25,7 +25,7 @@ class LoggerServiceProvider extends ServiceProvider
             \Sourcetoad\Logger\Listeners\LogLockedLogins::class,
         ],
         \Illuminate\Auth\Events\PasswordReset::class => [
-            \Sourcetoad\Logger\Listeners\LogLockedLogins::class,
+            \Sourcetoad\Logger\Listeners\LogPasswordReset::class,
         ],
     ];
 
