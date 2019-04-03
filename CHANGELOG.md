@@ -1,3 +1,6 @@
+# v1.0.4 (April 3, 2019)
+ * Use proper listener for password reset event.
+
 # v1.0.3 (April 3, 2019)
  * Fix bad composer.json version constraint.
 
