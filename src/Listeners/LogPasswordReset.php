@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger\Listeners;
 
-use App\PasswordReset;
+use Illuminate\Auth\Events\PasswordReset;
 use Sourcetoad\Logger\Logger;
 
 class LogPasswordReset
