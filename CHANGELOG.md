@@ -1,3 +1,6 @@
+# v1.0.3 (April 3, 2019)
+ * Fix bad composer.json version constraint.
+
 # v1.0.2 (April 3, 2019)
  * Fix event for PasswordReset.
  * Add composer dependency on Laravel config().
