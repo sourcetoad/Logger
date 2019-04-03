@@ -6,6 +6,7 @@ namespace Sourcetoad\Logger\Middleware;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Logger;
 
@@ -37,11 +38,13 @@ class LogOutputtedKeys
             return;
         }
 
-        $data = [];
         if ($response instanceof JsonResponse) {
             $data = $response->getData(true);
+        } else if ($response instanceof Response) {
+            $data = [];
         } else {
-            throw new \InvalidArgumentException("Logger could not decode class: " . get_class($response));
+            $data = [];
+            \Log::warning('Could not decode class to extract data keys: ' . get_class($response));
         }
 
         if ($request->method() === 'GET') {
