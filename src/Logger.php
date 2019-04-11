@@ -35,7 +35,7 @@ class Logger
 
     public function logExplicitLogout()
     {
-        $type = ActivityType::FAILED_LOGIN;
+        $type = ActivityType::LOGOUT;
 
         $keys = [
             'id'    => '',
