@@ -59,7 +59,7 @@ This points our `App\User::class` to an enum (integer). This means our database 
 
 Recommended action is creating an enum class to describe all models in your system. If an integer mapping is not detected. The system will error out with an `/InvalidArgumentException`.
 
-This enforces the user to create shorthand notation for all models. To cut down on database size. If a numeric morph is not found, the system will fail out. This means existing morphs are effectively broken with this plugin. However, due to internal use we haven't explored a correction for this.
+This enforces the user to create shorthand notation for all models. To cut down on database size. If a numeric morph is not found, the system will fail out. Due to issues with blindly overwriting and applying these morphs globally, they are manually applied. This means that morphs in your application are left untouched.
 
 #### Trackable Trait
 For models that may contain information that you wish to be notified was access/retrieved. You may add the Trackable trait to these models. The issue with this, is a record without a user association is frankly useless. However, you may access a record that has no foreign key or relation to a user model. Tracking that makes auditing quite useless.
@@ -97,6 +97,5 @@ This will run taking 200 items of both changes and retrieved models. It will ide
 As you can see, we have to traverse whatever relation/property we need in order to relate the model at hand to a user. If there is no match, you probably shouldn't be logging it.
 
 ## Roadmap
-1. Support for existing morphs.
-2. Support for a model that has no user associated with it.
-3. Support for Laravel 5.7, 5.8
+1. Support for a model that has no user associated with it.
+2. Support for Laravel 5.7, 5.8
