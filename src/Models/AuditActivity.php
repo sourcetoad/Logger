@@ -5,7 +5,6 @@ namespace Sourcetoad\Logger\Models;
 
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -24,7 +23,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property-read AuditKey $key
  * @property-read User $user
  */
-class AuditActivity extends Model
+class AuditActivity extends BaseModel
 {
     use Immutable;
 
