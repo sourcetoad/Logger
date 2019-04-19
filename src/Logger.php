@@ -159,7 +159,13 @@ class Logger
 
     private function getNumericMorphMap(Model $model): int
     {
-        $morphableTypeId = $model->getMorphClass();
+        $fcqn = get_class($model);
+        $morphMap = LoggerServiceProvider::$morphs;
+        $morphableTypeId = null;
+
+        if (! empty($morphMap) && in_array($fcqn, $morphMap)) {
+            $morphableTypeId = array_search($fcqn, $morphMap, true);
+        }
 
         if (is_numeric($morphableTypeId)) {
             return $morphableTypeId;
