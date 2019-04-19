@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Sourcetoad\Logger\Traits\Immutable;
 
@@ -14,7 +13,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property string $data
  * @property string $hash
  */
-class AuditKey extends Model
+class AuditKey extends BaseModel
 {
     use Immutable;
 

@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -13,7 +12,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property string $route
  * @property string $route_hash
  */
-class AuditRoute extends Model
+class AuditRoute extends BaseModel
 {
     use Immutable;
 

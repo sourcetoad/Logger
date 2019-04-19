@@ -20,7 +20,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property-read User|null $user
  * @property-read Model $entity
  */
-class AuditChange extends Model
+class AuditChange extends BaseModel
 {
     use Immutable;
 
