@@ -4,13 +4,14 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger;
 
 use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Sourcetoad\Logger\Commands\AuditModelResolver;
 use Sourcetoad\Logger\Middleware\LogOutputtedKeys;
 
 class LoggerServiceProvider extends ServiceProvider
 {
+    public static $morphs = [];
+
     protected $listeners = [
         \Illuminate\Auth\Events\Login::class => [
             \Sourcetoad\Logger\Listeners\LogSuccessfulLogin::class,
@@ -62,8 +63,7 @@ class LoggerServiceProvider extends ServiceProvider
 
     private function registerMorphMaps()
     {
-        $morphables = config('logger.morphs');
-        Relation::morphMap($morphables, true);
+        self::$morphs = config('logger.morphs', []);
     }
 
     private function registerEventListeners()
