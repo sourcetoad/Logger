@@ -18,6 +18,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int|null $entity_id
  * @property int $type
  * @property string $ip_address
+ * @property int $verb
  * @property Carbon $created_at
  * @property-read AuditRoute $route
  * @property-read AuditKey $key
