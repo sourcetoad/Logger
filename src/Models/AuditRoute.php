@@ -39,7 +39,7 @@ class AuditRoute extends BaseModel
 
     public static function createOrFind(string $route): AuditRoute
     {
-        $routeHash = md5(strtolower($route));
+        $routeHash = md5(strtolower(trim($route)));
 
         /** @var AuditRoute $route */
         $route = AuditRoute::query()->firstOrCreate([
