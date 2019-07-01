@@ -37,6 +37,7 @@ class LoggerServiceProvider extends ServiceProvider
             $this->commands([AuditModelResolver::class]);
         }
 
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'logger');
         $this->mergeConfigFrom(__DIR__ . '/../config/logger.php', 'logger');
         $this->publishes([
             __DIR__  . '/../config/logger.php' => config_path('logger.php')
