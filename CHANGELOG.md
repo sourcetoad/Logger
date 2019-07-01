@@ -1,3 +1,7 @@
+# v1.1.1 (July 1, 2019)
+ * [#3](https://github.com/sourcetoad/Logger/issues/3) - Translations for enums.
+ * Trim route to prevent duplicate entries.
+
 # v1.1.0 (April 19, 2019)
  * [#1](https://github.com/sourcetoad/Logger/issues/1) - Prevent destroying existing morphs.
  * Use proper type for logout event. 
