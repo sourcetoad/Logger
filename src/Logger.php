@@ -114,12 +114,13 @@ class Logger
             foreach (self::$changedModels as $changed) {
                 /** @var Model $model */
                 $model = $changed['model'];
+                $keys = AuditKey::createOrFind($changed['fields']);
 
                 $data[] = [
                     'activity_id' => $activity->id,
                     'entity_type' => $this->getNumericMorphMap($model),
                     'entity_id'   => $model->getKey(),
-                    'fields'      => json_encode($changed['fields'])
+                    'key_id'      => $keys->id,
                 ];
             }
 

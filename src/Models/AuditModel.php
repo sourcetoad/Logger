@@ -15,6 +15,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int $entity_type
  * @property int $entity_id
  * @property int|null $user_id
+ * @property bool $processed
  * @property-read User|null $user
  * @property-read Model $entity
  */
@@ -26,6 +27,7 @@ class AuditModel extends BaseModel
         'activity_id',
         'entity_type',
         'entity_id',
+        'processed',
     ];
 
     public $timestamps = false;

@@ -29,27 +29,45 @@ class AuditModelResolver extends Command
      */
     public function handle()
     {
-        AuditChange::query()->whereNull('user_id')->chunkById(200, function ($items) {
+        AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditChange $item */
             foreach ($items as $item) {
+                if (empty($item->entity)) {
+                    $item->processed = true;
+                    $item->saveOrFail();
+                    continue;
+                }
+
                 $id = $item->entity->trackableUserResolver();
 
                 if (empty($id)) {
                     $this->error(get_class($item->entity) . ' - ' . $item->entity_id . ' could not be resolved to a user_id.');
+                    continue;
                 }
+
+                $item->processed = true;
                 $item->user_id = $id;
                 $item->saveOrFail();
             }
         });
 
-        AuditModel::query()->whereNull('user_id')->chunkById(200, function ($items) {
+        AuditModel::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditModel $item */
             foreach ($items as $item) {
+                if (empty($item->entity)) {
+                    $item->processed = true;
+                    $item->saveOrFail();
+                    continue;
+                }
+
                 $id = $item->entity->trackableUserResolver();
 
                 if (empty($id)) {
                     $this->error(get_class($item->entity) . ' - ' . $item->entity_id . ' could not be resolved to a user_id.');
+                    continue;
                 }
+
+                $item->processed = true;
                 $item->user_id = $id;
                 $item->saveOrFail();
             }

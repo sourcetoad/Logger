@@ -97,5 +97,4 @@ This will run taking 200 items of both changes and retrieved models. It will ide
 As you can see, we have to traverse whatever relation/property we need in order to relate the model at hand to a user. If there is no match, you probably shouldn't be logging it.
 
 ## Roadmap
-1. Support for a model that has no user associated with it.
-2. Support for Laravel 5.7, 5.8
+1. Support for Laravel 5.7, 5.8
