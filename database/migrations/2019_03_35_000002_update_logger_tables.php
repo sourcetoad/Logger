@@ -16,7 +16,7 @@ class UpdateLoggerTables extends Migration
 
         Schema::table('audit_changes', function (Blueprint $table) {
             $table->boolean('processed')->default(false);
-            $table->bigInteger('key_id', false, true)->after('user_id');
+            $table->bigInteger('key_id', false, true)->after('user_id')->nullable(true);
 
             $table
                 ->foreign('key_id')
