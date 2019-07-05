@@ -5,7 +5,6 @@ namespace Sourcetoad\Logger\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
