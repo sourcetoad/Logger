@@ -42,6 +42,8 @@ class UpdateLoggerTables extends Migration
     public function down()
     {
         Schema::table('audit_changes', function (Blueprint $table) {
+            $table->dropForeign(['key_id']);
+            $table->dropColumn('key_id');
             $table->dropColumn('processed');
         });
 
