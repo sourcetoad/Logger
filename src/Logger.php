@@ -6,6 +6,7 @@ namespace Sourcetoad\Logger;
 use Illuminate\Database\Eloquent\Model;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
+use Sourcetoad\Logger\Helpers\AuditResolver;
 use Sourcetoad\Logger\Models\AuditActivity;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditKey;
@@ -121,6 +122,10 @@ class Logger
                     'entity_type' => $this->getNumericMorphMap($model),
                     'entity_id'   => $model->getKey(),
                     'key_id'      => $keys->id,
+                    'user_id'     => AuditResolver::findUserId($model),
+
+                    // TODO Remove after we kill cron/queue system
+                    'processed'   => true,
                 ];
             }
 
@@ -145,7 +150,11 @@ class Logger
             $data[] = [
                 'activity_id' => $activity->id,
                 'entity_type' => $this->getNumericMorphMap($model),
-                'entity_id'   => $model->getKey()
+                'entity_id'   => $model->getKey(),
+                'user_id'     => AuditResolver::findUserId($model),
+
+                // TODO Remove after we kill cron/queue system
+                'processed'   => true,
             ];
         }
         AuditModel::query()->insert($data);
