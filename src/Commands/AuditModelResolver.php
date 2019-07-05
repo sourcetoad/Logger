@@ -29,7 +29,7 @@ class AuditModelResolver extends Command
      */
     public function handle()
     {
-        AuditChange::query()->whereNull('user_id')->chunkById(200, function ($items) {
+        AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditChange $item */
             foreach ($items as $item) {
                 $id = $item->entity->trackableUserResolver();
@@ -42,7 +42,7 @@ class AuditModelResolver extends Command
             }
         });
 
-        AuditModel::query()->whereNull('user_id')->chunkById(200, function ($items) {
+        AuditModel::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditModel $item */
             foreach ($items as $item) {
                 $id = $item->entity->trackableUserResolver();
