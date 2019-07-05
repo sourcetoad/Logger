@@ -29,16 +29,20 @@ class UpdateLoggerTables extends Migration
             $table->boolean('processed')->default(false);
         });
 
+        $dispatcher = AuditChange::getEventDispatcher();
+        AuditChange::unsetEventDispatcher();
+
         AuditChange::query()->chunkById(200, function ($changes) {
             /** @var AuditChange $change */
             foreach ($changes as $change) {
                 $fields = array_flip(json_decode($change->fields, true));
-
                 $keys = AuditKey::createOrFind($fields);
                 $change->key_id = $keys->id;
                 $change->saveOrFail();
             }
         });
+
+        AuditChange::setEventDispatcher($dispatcher);
     }
 
     public function down()
