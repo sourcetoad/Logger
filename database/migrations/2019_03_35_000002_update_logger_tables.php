@@ -32,7 +32,9 @@ class UpdateLoggerTables extends Migration
         AuditChange::query()->chunkById(200, function ($changes) {
             /** @var AuditChange $change */
             foreach ($changes as $change) {
-                $keys = AuditKey::createOrFind(json_decode($change->fields, true));
+                $fields = array_flip(json_decode($change->fields, true));
+
+                $keys = AuditKey::createOrFind($fields);
                 $change->key_id = $keys->id;
                 $change->saveOrFail();
             }
