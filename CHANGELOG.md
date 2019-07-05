@@ -1,3 +1,7 @@
+# v1.2.0 (July 5, 2019)
+ * [#5](https://github.com/sourcetoad/Logger/issues/5) - Support for models with no user found.
+ * [#7](https://github.com/sourcetoad/Logger/issues/7) - Swap to non-async process for finding user.
+
 # v1.1.1 (July 1, 2019)
  * [#3](https://github.com/sourcetoad/Logger/issues/3) - Translations for enums.
  * Trim route to prevent duplicate entries.
