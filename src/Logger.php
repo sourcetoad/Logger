@@ -122,10 +122,7 @@ class Logger
                     'entity_type' => $this->getNumericMorphMap($model),
                     'entity_id'   => $model->getKey(),
                     'key_id'      => $keys->id,
-                    'user_id'     => AuditResolver::findUserId($model),
-
-                    // TODO Remove after we kill cron/queue system
-                    'processed'   => true,
+                    'processed'   => false,
                 ];
             }
 
@@ -151,10 +148,7 @@ class Logger
                 'activity_id' => $activity->id,
                 'entity_type' => $this->getNumericMorphMap($model),
                 'entity_id'   => $model->getKey(),
-                'user_id'     => AuditResolver::findUserId($model),
-
-                // TODO Remove after we kill cron/queue system
-                'processed'   => true,
+                'processed'   => false,
             ];
         }
         AuditModel::query()->insert($data);
