@@ -1,3 +1,6 @@
+# v1.2.1 (July 7, 2019)
+ * Revert non-async process.
+
 # v1.2.0 (July 5, 2019)
  * [#5](https://github.com/sourcetoad/Logger/issues/5) - Support for models with no user found.
  * [#7](https://github.com/sourcetoad/Logger/issues/7) - Swap to non-async process for finding user.
