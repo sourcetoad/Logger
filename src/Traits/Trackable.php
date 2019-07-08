@@ -10,8 +10,7 @@ trait Trackable
 {
     public static function bootTrackable()
     {
-        static::retrieved(function (Model $model)
-        {
+        static::retrieved(function (Model $model) {
             resolve(Logger::class)->logRetrievedModel($model);
         });
 
