@@ -23,7 +23,7 @@ This means that the method for storage must be efficient, unlike other packages 
 
 ### Laravel
 
-This package can be used in Laravel 5.6.
+This package can be used in Laravel 5.6/5.7/5.8 presently.
 
 You can install the package via composer:
 
@@ -31,7 +31,7 @@ You can install the package via composer:
 composer require sourcetoad/logger
 ```
 
-Since we only support Laravel 5.6 right now, the package will use Auto Discovery feature of Laravel 5.5 to register the service provider.
+The package will use Auto Discovery feature of Laravel 5.5 to register the service provider.
 
 ## Configs
 You may publish the configuration to make changes via:
