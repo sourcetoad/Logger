@@ -1,3 +1,7 @@
+# v1.3.0 (July 25, 2019)
+ * Laravel 5.7 support
+ * Laravel 5.8 support
+
 # v1.2.1 (July 7, 2019)
  * Revert non-async process.
 
