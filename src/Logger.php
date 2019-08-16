@@ -117,6 +117,11 @@ class Logger
                 $model = $changed['model'];
                 $keys = AuditKey::createOrFind($changed['fields']);
 
+                // We could be given a model that isn't reflective of anything in the database (IE not saved)
+                if (empty($model->getKey())) {
+                    continue;
+                }
+
                 $data[] = [
                     'activity_id' => $activity->id,
                     'entity_type' => $this->getNumericMorphMap($model),
@@ -144,6 +149,12 @@ class Logger
 
         $data = [];
         foreach (self::$retrievedModels as $model) {
+
+            // We could be given a model that isn't reflective of anything in the database (IE not saved)
+            if (empty($model->getKey())) {
+                continue;
+            }
+
             $data[] = [
                 'activity_id' => $activity->id,
                 'entity_type' => $this->getNumericMorphMap($model),
