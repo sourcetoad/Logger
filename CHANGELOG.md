@@ -1,3 +1,6 @@
+# v1.3.1 (August 20, 2019)
+ * Support for instance where unsaved model (null entity_id) is provided
+
 # v1.3.0 (July 25, 2019)
  * Laravel 5.7 support
  * Laravel 5.8 support
