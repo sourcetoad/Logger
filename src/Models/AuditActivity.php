@@ -76,8 +76,6 @@ class AuditActivity extends BaseModel
                 return trans('logger::enums.verb_post');
 
             case HttpVerb::PATCH:
-                return trans('logger::enums.verb_patch');
-
             case HttpVerb::PUT:
                 return trans('logger::enums.verb_patch');
 
