@@ -42,7 +42,7 @@ class AuditRoute extends BaseModel
         $routeHash = md5(strtolower(trim($route)));
 
         /** @var AuditRoute $route */
-        $route = AuditRoute::query()->firstOrCreate([
+        $route = AuditRoute::query()->lockForUpdate()->firstOrCreate([
             'route_hash' => $routeHash,
         ], [
             'route' => $route,

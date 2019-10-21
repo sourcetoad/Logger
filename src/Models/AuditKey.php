@@ -54,6 +54,7 @@ class AuditKey extends BaseModel
 
         /** @var AuditKey $key */
         $key = AuditKey::query()
+            ->lockForUpdate()
             ->firstOrCreate([
                 'hash' => $jsonHash
             ], [
