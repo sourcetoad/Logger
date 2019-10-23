@@ -1,3 +1,6 @@
+# v1.3.2 (October 23, 2019)
+ * Support for race conditions during creation, with locks.
+
 # v1.3.1 (August 20, 2019)
  * Support for instance where unsaved model (null entity_id) is provided
 
