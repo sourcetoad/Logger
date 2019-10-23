@@ -43,7 +43,7 @@ class AuditModel extends BaseModel
     public static function createOrFind(AuditActivity $activity, int $modelType, int $modelId): AuditModel
     {
         /** @var AuditModel $model */
-        $model = AuditModel::query()->create([
+        $model = AuditModel::query()->lockForUpdate()->create([
             'activity_id' => $activity->id,
             'entity_type' => $modelType,
             'entity_id'   => $modelId,
