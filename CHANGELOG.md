@@ -1,3 +1,9 @@
+# v2.0.0 (April 23, 2020)
+ * Laravel 6.x support
+ * Laravel 7.x support
+ * GitHub Action - Code Style
+ * Github Action - Tests
+
 # v1.3.2 (October 23, 2019)
  * Support for race conditions during creation, with locks.
 
