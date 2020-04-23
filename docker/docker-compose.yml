@@ -9,8 +9,8 @@ services:
     volumes:
       - ../:/code
     networks:
-      - logger-internal
+      - st-internal
 networks:
   logger-internal:
     external:
-      name: logger-internal
+      name: st-internal
