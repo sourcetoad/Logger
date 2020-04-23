@@ -41,9 +41,9 @@ class LogOutputtedKeys
 
         if ($response instanceof JsonResponse) {
             $data = $response->getData(true);
-        } else if ($response instanceof Response) {
+        } elseif ($response instanceof Response) {
             $data = [];
-        } else if ($response instanceof RedirectResponse) {
+        } elseif ($response instanceof RedirectResponse) {
             $data = [];
         } else {
             $data = [];

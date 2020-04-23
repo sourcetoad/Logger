@@ -15,14 +15,16 @@ trait Immutable
 
             // We need to allow updates for the AuditModel (user_id/processed)
             if ($model instanceof AuditModel) {
-                if ($model->isDirty(['user_id', 'processed']) && $model->isClean(['id', 'activity_id', 'entity_type', 'entity_id'])) {
+                if ($model->isDirty(['user_id', 'processed']) &&
+                    $model->isClean(['id', 'activity_id', 'entity_type', 'entity_id'])) {
                     return true;
                 }
             }
 
             // We need to allow updates for the AuditChange (user_id/processed)
             if ($model instanceof AuditChange) {
-                if ($model->isDirty(['user_id', 'processed']) && $model->isClean(['id', 'activity_id', 'entity_id', 'key_id'])) {
+                if ($model->isDirty(['user_id', 'processed']) &&
+                    $model->isClean(['id', 'activity_id', 'entity_id', 'key_id'])) {
                     return true;
                 }
             }
