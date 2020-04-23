@@ -6,7 +6,6 @@ namespace Sourcetoad\Logger;
 use Illuminate\Database\Eloquent\Model;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
-use Sourcetoad\Logger\Helpers\AuditResolver;
 use Sourcetoad\Logger\Models\AuditActivity;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditKey;
