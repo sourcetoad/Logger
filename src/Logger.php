@@ -6,7 +6,6 @@ namespace Sourcetoad\Logger;
 use Illuminate\Database\Eloquent\Model;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
-use Sourcetoad\Logger\Helpers\AuditResolver;
 use Sourcetoad\Logger\Models\AuditActivity;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditKey;
@@ -16,10 +15,10 @@ use Sourcetoad\Logger\Models\AuditRoute;
 class Logger
 {
     /** @var Model[] */
-    static $retrievedModels = [];
+    private static $retrievedModels = [];
 
     /** @var array */
-    static $changedModels = [];
+    private static $changedModels = [];
 
     public function logSuccessfulLogin()
     {
@@ -149,7 +148,6 @@ class Logger
 
         $data = [];
         foreach (self::$retrievedModels as $model) {
-
             // We could be given a model that isn't reflective of anything in the database (IE not saved)
             if (empty($model->getKey())) {
                 continue;

@@ -29,6 +29,7 @@ trait Trackable
 
     public function trackableUserResolver()
     {
-        throw new \BadMethodCallException("This method (trackableUserResolver) needs to be implemented in the implemented class: " . static::class);
+        throw new \BadMethodCallException('This method (trackableUserResolver) needs ' .
+            'to be implemented in the implemented class: ' . static::class);
     }
 }
