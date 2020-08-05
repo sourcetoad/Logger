@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditKey;
@@ -10,7 +11,7 @@ class UpdateLoggerTables extends Migration
 {
     public function up()
     {
-        if (config('database.default') !== 'mysql') {
+        if (DB::connection()->getDriverName() !== 'mysql') {
             throw new \InvalidArgumentException("MySQL is the only supported driver for this package.");
         }
 
