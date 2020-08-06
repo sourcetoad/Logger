@@ -1,3 +1,6 @@
+# v2.0.1 (August 6, 2020)
+ * Fix issue with multiple database connections using wrong variable in driver field.
+
 # v2.0.0 (April 23, 2020)
  * Laravel 6.x support
  * Laravel 7.x support
