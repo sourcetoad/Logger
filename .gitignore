@@ -3,6 +3,9 @@ Thumbs.db
 .idea/*
 vendor/
 
+# phpunit
+.phpunit.result.cache
+
 # composer
 composer.lock
 composer.phar
