@@ -23,7 +23,7 @@ This means that the method for storage must be efficient, unlike other packages 
 
 ### Laravel
 
-This package can be used in Laravel 6.x/7.x presently. If you require 5.x, please use the `v1.3.x` tag.
+This package can be used in Laravel 6.x/7.x/8.x presently. If you require 5.x, please use the `v1.3.x` tag.
 
 You can install the package via composer:
 
