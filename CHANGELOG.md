@@ -1,3 +1,8 @@
+# v2.1.0 (December 11, 2020)
+ * Laravel 8.x support
+ * Fix issue with missing indexes on "processed" columns.
+ * Update development docker container to php74 / xdebug3
+
 # v2.0.1 (August 6, 2020)
  * Fix issue with multiple database connections using wrong variable in driver field.
 
