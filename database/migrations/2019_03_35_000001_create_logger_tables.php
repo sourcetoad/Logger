@@ -7,17 +7,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLoggerTables extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
-        if (DB::connection()->getDriverName() !== 'mysql') {
-            throw new \InvalidArgumentException("MySQL is the only supported driver for this package.");
-        }
-
         Schema::create('audit_routes', function (Blueprint $table) {
             $table->increments('id');
             $table->text('route');
@@ -108,12 +99,7 @@ class CreateLoggerTables extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::disableForeignKeyConstraints();
         Schema::drop('audit_changes');
