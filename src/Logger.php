@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
 use Sourcetoad\Logger\Models\AuditActivity;
@@ -89,12 +90,12 @@ class Logger
 
     public function logActivity(int $type, array $keys = [])
     {
-        $path = \Request::path();
-        $verb = $this->getHttpVerb(\Request::method());
+        $path = Request::path();
+        $verb = $this->getHttpVerb(Request::method());
         $routeId = AuditRoute::createOrFind($path)->id;
-        $userId = \Request::user()->id ?? null;
+        $userId = Request::user()->id ?? null;
         $keyId = AuditKey::createOrFind($keys)->id;
-        $ipAddress = \Request::ip();
+        $ipAddress = Request::ip();
 
         // If we have changed models. Make another entry for the changes.
         if (! empty(self::$changedModels)) {

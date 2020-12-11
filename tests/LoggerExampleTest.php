@@ -5,7 +5,7 @@ namespace Sourcetoad\Logger\Test;
 
 class LoggerExampleTest extends TestCase
 {
-    public function testClassLoaded()
+    public function testClassLoaded(): void
     {
         $this->assertTrue(true);
     }
