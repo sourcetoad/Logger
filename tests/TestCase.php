@@ -8,14 +8,14 @@ use Sourcetoad\Logger\LoggerServiceProvider;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LoggerServiceProvider::class
         ];
     }
 
-    protected function getPackageAliases($app)
+    protected function getPackageAliases($app): array
     {
         return [
             'logger' => LoggerFacade::class

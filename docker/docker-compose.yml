@@ -11,6 +11,6 @@ services:
     networks:
       - st-internal
 networks:
-  logger-internal:
+  st-internal:
     external:
       name: st-internal
