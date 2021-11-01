@@ -1,3 +1,7 @@
+# v3.0.0 (November 1, 2021)
+ * Drop PHP 7.2 support
+ * Add PHP 8.0 support
+
 # v2.1.0 (December 11, 2020)
  * Laravel 8.x support
  * Fix issue with missing indexes on "processed" columns.
