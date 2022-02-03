@@ -39,7 +39,7 @@ The package will use Auto Discovery feature of Laravel 5.5 to register the servi
 You may publish the configuration to make changes via:
 
 ```php
-    php artisan vendor:publish --tag=logger
+php artisan vendor:publish --tag=logger
 ```
 
 This will contain model maps, which can be read about below.
@@ -50,11 +50,11 @@ This will contain model maps, which can be read about below.
 Due to the large amount of records anticipated to be created, you must create an integer mapping to models in your system. We give an example as follows:
 
 ```php
-    use Sourcetoad\Logger\Enums\ModelMapping;
+use Sourcetoad\Logger\Enums\ModelMapping;
  
-    'morphs' => [
-        ModelMapping::USER => 'App\User'
-    ];
+'morphs' => [
+   ModelMapping::USER => 'App\User'
+];
 ```
 
 This points our `App\User::class` to an enum (integer). This means our database is created with small integers vs large fully qualified namespaces.
@@ -67,11 +67,11 @@ This enforces the user to create shorthand notation for all models. To cut down 
 For models that may contain information that you wish to be notified was access/retrieved. You may add the Trackable trait to these models. The issue with this, is a record without a user association is frankly useless. However, you may access a record that has no foreign key or relation to a user model. Tracking that makes auditing quite useless.
 
 ```php
-    use Sourcetoad\Logger\Traits\Trackable;
+use Sourcetoad\Logger\Traits\Trackable;
   
-    class Model {
-        use Trackable;
-    }
+class Model {
+    use Trackable;
+}
 ```
 
 For this reason, we've developed the notion of custom resolvers. They must be implemented for each Entity tracked, which (if tracked) must be in the `morphs` table in the above settings.
@@ -82,18 +82,18 @@ For this reason, we've developed the notion of custom resolvers. They must be im
 These custom resolvers don't run as items are entered, due to the load increase. This should arguably be queued, but easier on implementations for a command (cron) system. Use the Laravel Scheduler to execute our command.
 
 ```php
-    $schedule->command('logger:audit-resolver')
-        ->hourly()
-        ->withoutOverlapping();
+$schedule->command('logger:audit-resolver')
+    ->hourly()
+    ->withoutOverlapping();
 ```
 
 This will run taking 200 items of both changes and retrieved models. It will identify the user associated with them. The functions for each individual model should be easy.
 
 ```php
-    public function trackableUserResolver()
-    {
-        return $this->object->relation->user_id;
-    }
+public function trackableUserResolver()
+{
+    return $this->object->relation->user_id;
+}
 ```
 
 As you can see, we have to traverse whatever relation/property we need in order to relate the model at hand to a user. If there is no match, you probably shouldn't be logging it.
