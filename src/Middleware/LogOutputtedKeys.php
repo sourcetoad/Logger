@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Logger;
 
@@ -40,7 +41,7 @@ class LogOutputtedKeys
         }
 
         if ($response instanceof JsonResponse) {
-            $data = $response->getData(true);
+            $data = Arr::wrap($response->getData(true));
         } elseif ($response instanceof Response) {
             $data = [];
         } elseif ($response instanceof RedirectResponse) {
