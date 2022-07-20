@@ -1,3 +1,6 @@
+# v3.0.1 (July 20, 2022)
+ * Fix issue where a JSON response does not return parseable json.
+
 # v3.0.0 (November 1, 2021)
  * Drop PHP 7.2 support
  * Add PHP 8.0 support
