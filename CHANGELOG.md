@@ -1,3 +1,9 @@
+# v4.0.0 (August 39, 2022)
+ * Drop PHP < 8 support.
+ * Add PHP 8.1 support.
+ * Add Laravel 9 support
+ * Drop Laravel < 9 support.
+
 # v3.0.1 (July 20, 2022)
  * Fix issue where a JSON response does not return parseable json.
 
