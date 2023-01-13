@@ -1,5 +1,6 @@
 name: main
 on:
+  pull_request:
   push:
 jobs:
   tests:
@@ -12,13 +13,13 @@ jobs:
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Composer Cache Directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -36,18 +37,19 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
+
   code_styles:
     runs-on: ubuntu-latest
     name: Code Style
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Composer Cache Directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -63,5 +65,4 @@ jobs:
         run: composer install --no-suggest --prefer-dist -n -o
 
       - name: Run style check
-        id: style_check
         run: vendor/bin/phpcs
