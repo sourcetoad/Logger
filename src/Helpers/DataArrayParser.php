@@ -28,6 +28,7 @@ class DataArrayParser
 
                 return trim($purgedKey, '.');
             })
+            ->filter()
             ->unique()
             ->sort()
             ->values()

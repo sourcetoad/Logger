@@ -28,6 +28,12 @@ class LoggerArrayParserTest extends TestCase
                     'username'
                 ]
             ],
+            'rejected key' => [
+                'input' => [
+                    'data' => 'foo'
+                ],
+                'expected' => []
+            ],
             'multiple keys' => [
                 'input' => [
                     'username' => 'Foo',
