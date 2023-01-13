@@ -13,7 +13,20 @@ class DataArrayParser
         return collect(Arr::dot($data))
             ->keys()
             ->map(function (string $key) {
-                return Str::afterLast($key, '.');
+                $removableIndexPairs = [
+                    'data',
+                    'entries',
+                ];
+
+                $purgedKey = preg_replace([
+                    '/[0-9]+/',
+                    '/(\.)+/',
+                ], [
+                    '',
+                    '.'
+                ], Str::remove($removableIndexPairs, $key));
+
+                return trim($purgedKey, '.');
             })
             ->unique()
             ->sort()

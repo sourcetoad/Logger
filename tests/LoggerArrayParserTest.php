@@ -67,6 +67,78 @@ class LoggerArrayParserTest extends TestCase
                     'first_name',
                     'last_name'
                 ]
+            ],
+            'deeply nested property' => [
+                'input' => [
+                    [
+                        'data' => [
+                            0 => [
+                                'id' => 'Value',
+                                'person' => [
+                                    'updated_at' => 'Value'
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'expected' => [
+                    'id',
+                    'person.updated_at'
+                ]
+            ],
+            'deeply nested numeric property' => [
+                'input' => [
+                    [
+                        'data' => [
+                            0 => [
+                                'id' => 'Value',
+                                'persons' => [
+                                    0 => [
+                                        'updated_at' => 'Value'
+                                    ],
+                                    1 => [
+                                        'updated_at' => 'Value'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'expected' => [
+                    'id',
+                    'persons.updated_at'
+                ]
+            ],
+            'entries deeply nested w/ numerics and duplicates' => [
+                'input' => [
+                    'entries' => [
+                        0 => [
+                            'content' => [
+                                'response' => [
+                                    'data' => [
+                                        21 => [
+                                            'created_at' => 'Value'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                        1 => [
+                            'content' => [
+                                'response' => [
+                                    'data' => [
+                                        22 => [
+                                            'created_at' => 'Value'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'expected' => [
+                    'content.response.created_at'
+                ]
             ]
         ];
     }
