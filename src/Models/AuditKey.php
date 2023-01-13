@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger\Models;
 
 use Illuminate\Support\Arr;
+use Sourcetoad\Logger\Helpers\DataArrayParser;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -30,14 +31,12 @@ class AuditKey extends BaseModel
 
     protected function setRouteAttribute($value)
     {
-        if (is_array($value)) {
-            $flattenedKeys = array_keys(Arr::dot($value));
-            sort($flattenedKeys);
-            $value = json_encode($flattenedKeys);
-        }
+        $value = Arr::wrap($value);
+        $flattenedKeys = DataArrayParser::dedupe($value);
+        $jsonBlob = json_encode($flattenedKeys);
 
-        $this->attributes['data'] = $value;
-        $this->attributes['hash'] = md5($value);
+        $this->attributes['data'] = $jsonBlob;
+        $this->attributes['hash'] = md5($jsonBlob);
     }
 
     //--------------------------------------------------------------------------------------------------------------
@@ -46,8 +45,7 @@ class AuditKey extends BaseModel
 
     public static function createOrFind(array $keys): AuditKey
     {
-        $flattenedKeys = array_keys(Arr::dot($keys));
-        sort($flattenedKeys);
+        $flattenedKeys = DataArrayParser::dedupe($keys);
 
         $jsonBlob = json_encode($flattenedKeys);
         $jsonHash = md5($jsonBlob);

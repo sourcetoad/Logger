@@ -1,0 +1,23 @@
+<?php
+declare(strict_types = 1);
+
+namespace Sourcetoad\Logger\Helpers;
+
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+
+class DataArrayParser
+{
+    public static function dedupe(array $data): array
+    {
+        return collect(Arr::dot($data))
+            ->keys()
+            ->map(function (string $key) {
+                return Str::afterLast($key, '.');
+            })
+            ->unique()
+            ->sort()
+            ->values()
+            ->toArray();
+    }
+}
