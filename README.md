@@ -23,7 +23,10 @@ This means that the method for storage must be efficient, unlike other packages 
 
 ### Laravel
 
-This package can be used in Laravel 6.x/7.x/8.x presently. If you require 5.x, please use the `v1.3.x` tag.
+You are reading the documentation for 9.x.
+
+* If you're using Laravel 6, 7 or 8 please see the docs for [3.x](https://github.com/sourcetoad/Logger/releases/tag/v3.0.1).
+* If you're using Laravel 5 or below please see docs for [1.x](https://github.com/sourcetoad/Logger/releases/tag/v1.3.0)
 
 The currently supported database(s): `mysql`
 
@@ -33,7 +36,7 @@ You can install the package via composer:
 composer require sourcetoad/logger
 ```
 
-The package will use Auto Discovery feature of Laravel 5.5 to register the service provider.
+The package will use Auto Discovery feature of Laravel 5.5+ to register the service provider.
 
 ## Configs
 You may publish the configuration to make changes via:
