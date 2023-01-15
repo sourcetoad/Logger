@@ -9,21 +9,10 @@ use Sourcetoad\Logger\Models\AuditModel;
 
 class AuditModelResolver extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'logger:audit-resolver';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Identifiers users associated with models/changes logged.';
 
-    public function handle()
+    public function handle(): void
     {
         AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditChange $item */

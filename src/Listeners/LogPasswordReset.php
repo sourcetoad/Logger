@@ -8,7 +8,7 @@ use Sourcetoad\Logger\Logger;
 
 class LogPasswordReset
 {
-    public function handle(PasswordReset $passwordReset)
+    public function handle(PasswordReset $passwordReset): void
     {
         resolve(Logger::class)->logPasswordReset();
     }

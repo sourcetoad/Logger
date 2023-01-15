@@ -27,7 +27,7 @@ class AuditRoute extends BaseModel
     // Mutators
     //--------------------------------------------------------------------------------------------------------------
 
-    protected function setRouteAttribute($value)
+    protected function setRouteAttribute($value): void
     {
         $this->attributes['route'] = strtolower(trim($value));
         $this->attributes['route_hash'] = md5($this->attributes['route']);

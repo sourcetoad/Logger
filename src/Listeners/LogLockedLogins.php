@@ -8,7 +8,7 @@ use Sourcetoad\Logger\Logger;
 
 class LogLockedLogins
 {
-    public function handle(Lockout $event)
+    public function handle(Lockout $event): void
     {
         resolve(Logger::class)->logLockedLogin();
     }

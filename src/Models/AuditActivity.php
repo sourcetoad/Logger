@@ -5,8 +5,11 @@ namespace Sourcetoad\Logger\Models;
 
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
+use Sourcetoad\Logger\Logger;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -43,20 +46,20 @@ class AuditActivity extends BaseModel
         'ip_address'
     ];
 
-    protected $dates = [
-        'created_at'
+    protected $casts = [
+        'created_at' => 'datetime'
     ];
 
     //--------------------------------------------------------------------------------------------------------------
     // Mutators
     //--------------------------------------------------------------------------------------------------------------
 
-    protected function setIpAddressAttribute($value)
+    protected function setIpAddressAttribute(string|null $value): void
     {
-        $this->attributes['ip_address'] = inet_pton($value);
+        $this->attributes['ip_address'] = inet_pton((string)$value);
     }
 
-    protected function getIpAddressAttribute($value)
+    protected function getIpAddressAttribute($value): string
     {
         return strtoupper(inet_ntop($value));
     }
@@ -68,75 +71,49 @@ class AuditActivity extends BaseModel
 
     public function getHumanVerbAttribute(): string
     {
-        switch ($this->verb) {
-            case HttpVerb::GET:
-                return trans('logger::enums.verb_get');
-
-            case HttpVerb::POST:
-                return trans('logger::enums.verb_post');
-
-            case HttpVerb::PATCH:
-            case HttpVerb::PUT:
-                return trans('logger::enums.verb_patch');
-
-            case HttpVerb::DELETE:
-                return trans('logger::enums.verb_delete');
-
-            case HttpVerb::UNKNOWN:
-            default:
-                return trans('logger::enums.verb_unknown');
-        }
+        return match ($this->verb) {
+            HttpVerb::GET => trans('logger::enums.verb_get'),
+            HttpVerb::POST => trans('logger::enums.verb_post'),
+            HttpVerb::PATCH, HttpVerb::PUT => trans('logger::enums.verb_patch'),
+            HttpVerb::DELETE => trans('logger::enums.verb_delete'),
+            default => trans('logger::enums.verb_unknown'),
+        };
     }
 
     public function getHumanActivityAttribute(): string
     {
-        switch ($this->type) {
-            case ActivityType::FAILED_LOGIN:
-                return trans('logger::enums.activity_type_failed_login');
-
-            case ActivityType::LOGOUT:
-                return trans('logger::enums.activity_type_logout');
-
-            case ActivityType::SUCCESSFUL_LOGIN:
-                return trans('logger::enums.activity_type_logged_in');
-
-            case ActivityType::LOCKED_OUT:
-                return trans('logger::enums.activity_type_locked_out');
-
-            case ActivityType::PASSWORD_CHANGE:
-                return trans('logger::enums.activity_type_password_change');
-
-            case ActivityType::GET_DATA:
-                return trans('logger::enums.activity_type_get_data');
-
-            case ActivityType::MODIFY_DATA:
-                return trans('logger::enums.activity_type_modify_data');
-
-            default:
-                throw new \Exception('Unknown enum type: ' . $this->type);
-        }
+        return match ($this->type) {
+            ActivityType::FAILED_LOGIN => trans('logger::enums.activity_type_failed_login'),
+            ActivityType::LOGOUT => trans('logger::enums.activity_type_logout'),
+            ActivityType::SUCCESSFUL_LOGIN => trans('logger::enums.activity_type_logged_in'),
+            ActivityType::LOCKED_OUT => trans('logger::enums.activity_type_locked_out'),
+            ActivityType::PASSWORD_CHANGE => trans('logger::enums.activity_type_password_change'),
+            ActivityType::GET_DATA => trans('logger::enums.activity_type_get_data'),
+            ActivityType::MODIFY_DATA => trans('logger::enums.activity_type_modify_data'),
+            default => throw new \Exception('Unknown enum type: ' . $this->type),
+        };
     }
     
     //--------------------------------------------------------------------------------------------------------------
     // Relations
     //--------------------------------------------------------------------------------------------------------------
 
-    public function route()
+    public function route(): BelongsTo
     {
         return $this->belongsTo(AuditRoute::class);
     }
 
-    public function key()
+    public function key(): BelongsTo
     {
         return $this->belongsTo(AuditKey::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Logger::$userModel);
     }
 
-    public function entity()
+    public function entity(): MorphTo
     {
         return $this->morphTo();
     }

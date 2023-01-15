@@ -8,7 +8,7 @@ use Sourcetoad\Logger\Logger;
 
 trait Trackable
 {
-    public static function bootTrackable()
+    public static function bootTrackable(): void
     {
         static::retrieved(function (Model $model) {
             resolve(Logger::class)->logRetrievedModel($model);
@@ -27,7 +27,7 @@ trait Trackable
         });
     }
 
-    public function trackableUserResolver()
+    public function trackableUserResolver(): ?int
     {
         throw new \BadMethodCallException('This method (trackableUserResolver) needs ' .
             'to be implemented in the implemented class: ' . static::class);

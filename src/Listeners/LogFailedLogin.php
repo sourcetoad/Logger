@@ -8,7 +8,7 @@ use Sourcetoad\Logger\Logger;
 
 class LogFailedLogin
 {
-    public function handle(Failed $event)
+    public function handle(Failed $event): void
     {
         resolve(Logger::class)->logFailedLogin();
     }

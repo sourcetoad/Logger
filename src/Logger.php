@@ -16,12 +16,12 @@ use Sourcetoad\Logger\Models\AuditRoute;
 class Logger
 {
     /** @var Model[] */
-    private static $retrievedModels = [];
+    private static array $retrievedModels = [];
+    private static array $changedModels = [];
 
-    /** @var array */
-    private static $changedModels = [];
+    public static string $userModel = 'App/User';
 
-    public function logSuccessfulLogin()
+    public function logSuccessfulLogin(): AuditActivity
     {
         $type = ActivityType::SUCCESSFUL_LOGIN;
 
@@ -34,7 +34,7 @@ class Logger
         return $this->logActivity($type, $keys);
     }
 
-    public function logExplicitLogout()
+    public function logExplicitLogout(): AuditActivity
     {
         $type = ActivityType::LOGOUT;
 
@@ -46,7 +46,7 @@ class Logger
         return $this->logActivity($type, $keys);
     }
 
-    public function logFailedLogin()
+    public function logFailedLogin(): AuditActivity
     {
         $type = ActivityType::FAILED_LOGIN;
 
@@ -55,7 +55,7 @@ class Logger
         return $this->logActivity($type, $keys);
     }
 
-    public function logLockedLogin()
+    public function logLockedLogin(): AuditActivity
     {
         $type = ActivityType::LOCKED_OUT;
 
@@ -64,7 +64,7 @@ class Logger
         return $this->logActivity($type, $keys);
     }
 
-    public function logPasswordReset()
+    public function logPasswordReset(): AuditActivity
     {
         $type = ActivityType::PASSWORD_CHANGE;
 
@@ -88,7 +88,7 @@ class Logger
         ];
     }
 
-    public function logActivity(int $type, array $keys = [])
+    public function logActivity(int $type, array $keys = []): AuditActivity
     {
         $path = Request::path();
         $verb = $this->getHttpVerb(Request::method());
@@ -190,19 +190,13 @@ class Logger
 
     private function getHttpVerb(string $verb): int
     {
-        switch (strtolower($verb)) {
-            case 'get':
-                return HttpVerb::GET;
-            case 'post':
-                return HttpVerb::POST;
-            case 'patch':
-                return HttpVerb::PATCH;
-            case 'put':
-                return HttpVerb::PUT;
-            case 'delete':
-                return HttpVerb::DELETE;
-            default:
-                return HttpVerb::UNKNOWN;
-        }
+        return match (strtolower($verb)) {
+            'get' => HttpVerb::GET,
+            'post' => HttpVerb::POST,
+            'patch' => HttpVerb::PATCH,
+            'put' => HttpVerb::PUT,
+            'delete' => HttpVerb::DELETE,
+            default => HttpVerb::UNKNOWN,
+        };
     }
 }
