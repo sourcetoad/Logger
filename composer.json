@@ -34,7 +34,10 @@
         "laravel": {
             "providers": [
                 "Sourcetoad\\Logger\\LoggerServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Logger": "Sourcetoad\\Logger\\LoggerFacade"
+            }
         }
     },
     "require-dev": {
