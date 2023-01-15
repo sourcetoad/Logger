@@ -9,7 +9,10 @@
             "email": "connor@sourcetoad.com"
         }
     ],
-    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "ext-json": "*",
