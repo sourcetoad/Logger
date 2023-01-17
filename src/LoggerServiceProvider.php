@@ -4,15 +4,16 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger;
 
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Sourcetoad\Logger\Commands\AuditModelResolver;
 use Sourcetoad\Logger\Middleware\LogOutputtedKeys;
 
 class LoggerServiceProvider extends ServiceProvider
 {
-    public static $morphs = [];
+    public static array $morphs = [];
 
-    protected $listeners = [
+    protected array $listeners = [
         \Illuminate\Auth\Events\Login::class => [
             \Sourcetoad\Logger\Listeners\LogSuccessfulLogin::class,
         ],
@@ -30,7 +31,7 @@ class LoggerServiceProvider extends ServiceProvider
         ],
     ];
 
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -44,7 +45,7 @@ class LoggerServiceProvider extends ServiceProvider
         ], 'logger');
     }
 
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(Logger::class, function () {
             return new Logger();
@@ -57,21 +58,21 @@ class LoggerServiceProvider extends ServiceProvider
         $this->registerMiddleware();
     }
 
-    private function registerMiddleware()
+    private function registerMiddleware(): void
     {
         app(Kernel::class)->pushMiddleware(LogOutputtedKeys::class);
     }
 
-    private function registerMorphMaps()
+    private function registerMorphMaps(): void
     {
         self::$morphs = config('logger.morphs', []);
     }
 
-    private function registerEventListeners()
+    private function registerEventListeners(): void
     {
         foreach ($this->listeners as $key => $listeners) {
             foreach ($listeners as $listener) {
-                \Event::listen($key, $listener);
+                Event::listen($key, $listener);
             }
         }
     }

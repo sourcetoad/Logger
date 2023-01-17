@@ -8,10 +8,8 @@ use Sourcetoad\Logger\Logger;
 
 class LogExplicitLogout
 {
-    public function handle(Logout $event)
+    public function handle(Logout $event): void
     {
         resolve(Logger::class)->logExplicitLogout();
-
-        return true;
     }
 }

@@ -5,6 +5,9 @@ namespace Sourcetoad\Logger\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Sourcetoad\Logger\Logger;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -56,12 +59,12 @@ class AuditModel extends BaseModel
     // Relations
     //--------------------------------------------------------------------------------------------------------------
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Logger::$userModel);
     }
 
-    public function entity()
+    public function entity(): MorphTo
     {
         return $this->morphTo();
     }

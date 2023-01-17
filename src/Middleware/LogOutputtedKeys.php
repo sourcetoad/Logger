@@ -9,28 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Logger;
 
 class LogOutputtedKeys
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         return $next($request);
     }
 
-    /**
-     * @param Request $request
-     * @param $response
-     */
-    public function terminate(Request $request, $response)
+    public function terminate(Request $request, $response): void
     {
         $leadingStatusCodeNumber = substr((string) $response->getStatusCode(), 0, 1);
 
@@ -48,7 +38,7 @@ class LogOutputtedKeys
             $data = [];
         } else {
             $data = [];
-            \Log::warning('Could not decode class to extract data keys: ' . get_class($response));
+            Log::warning('Could not decode class to extract data keys: ' . get_class($response));
         }
 
         if ($request->method() === 'GET') {

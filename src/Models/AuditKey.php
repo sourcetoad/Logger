@@ -29,7 +29,7 @@ class AuditKey extends BaseModel
     // Mutators
     //--------------------------------------------------------------------------------------------------------------
 
-    protected function setRouteAttribute($value)
+    protected function setRouteAttribute($value): void
     {
         $value = Arr::wrap($value);
         $flattenedKeys = DataArrayParser::dedupe($value);

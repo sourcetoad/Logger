@@ -9,7 +9,7 @@ use Sourcetoad\Logger\Models\AuditModel;
 
 trait Immutable
 {
-    public static function bootImmutable()
+    public static function bootImmutable(): void
     {
         static::updating(function (Model $model) {
 
