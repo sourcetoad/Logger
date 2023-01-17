@@ -1,3 +1,9 @@
+# v4.1.0 (January 17, 2023)
+ * Upgrade away from deprecated GitHub Action tasks.
+ * Upgrade away from deprecated `phpunit.xml` config.
+ * Add feature to dedupe audit_keys more accurately.
+ * Refactor logic to php8 language features.
+
 # v4.0.0 (August 39, 2022)
  * Drop PHP < 8 support.
  * Add PHP 8.1 support.
