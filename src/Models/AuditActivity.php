@@ -5,6 +5,7 @@ namespace Sourcetoad\Logger\Models;
 
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Sourcetoad\Logger\Enums\ActivityType;
@@ -54,7 +55,7 @@ class AuditActivity extends BaseModel
     // Mutators
     //--------------------------------------------------------------------------------------------------------------
 
-    protected function setIpAddressAttribute(string|null $value): void
+    protected function setIpAddressAttribute(?string $value): void
     {
         $this->attributes['ip_address'] = inet_pton((string)$value);
     }
@@ -90,7 +91,7 @@ class AuditActivity extends BaseModel
             ActivityType::PASSWORD_CHANGE => trans('logger::enums.activity_type_password_change'),
             ActivityType::GET_DATA => trans('logger::enums.activity_type_get_data'),
             ActivityType::MODIFY_DATA => trans('logger::enums.activity_type_modify_data'),
-            default => throw new \Exception('Unknown enum type: ' . $this->type),
+            default => throw new Exception('Unknown enum type: ' . $this->type),
         };
     }
     

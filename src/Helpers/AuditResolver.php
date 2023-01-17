@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AuditResolver
 {
-    public static function findUserId(Model|null $model): ?int
+    public static function findUserId(?Model $model): ?int
     {
         if (empty($model)) {
             return null;
