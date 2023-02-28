@@ -62,7 +62,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: composer install --no-suggest --prefer-dist -n -o
+        run: composer install --no-suggest --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Run style check
         run: vendor/bin/phpcs
