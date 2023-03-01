@@ -3,13 +3,47 @@ on:
   pull_request:
   push:
 jobs:
+  tests-stability:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [ 8.0, 8.1 ]
+        stability: [ prefer-lowest, prefer-stable ]
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, gd, soap
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
+
+      - name: Execute tests
+        run: vendor/bin/phpunit --verbose
   tests-80:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0]
-        laravel: [9.0]
+        php: [ 8.0 ]
+        laravel: [ 9.0 ]
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
     steps:
       - name: Checkout code
@@ -45,8 +79,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.1]
-        laravel: [9.0, 10.0]
+        php: [ 8.1 ]
+        laravel: [ 9.0, 10.0 ]
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
     steps:
       - name: Checkout code
