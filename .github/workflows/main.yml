@@ -8,9 +8,9 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.0 ]
-        laravel: [ 9.0 ]
-    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
+        php: [8.0, 8.1]
+        stability: [prefer-lowest, prefer-stable]
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -23,8 +23,8 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.laravel }}-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.laravel }}-
+          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -34,11 +34,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: composer require "illuminate/auth:^${{ matrix.laravel }}" --prefer-stable --prefer-dist  -n &&
-          composer require "illuminate/config:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n &&
-          composer require "illuminate/database:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n &&
-          composer require "illuminate/support:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n &&
-          composer require "illuminate/translation:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
 
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
@@ -49,7 +45,7 @@ jobs:
       fail-fast: true
       matrix:
         php: [ 8.1 ]
-        laravel: [ 9.0, 10.0 ]
+        stability: [prefer-lowest, prefer-stable]
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
     steps:
       - name: Checkout code
@@ -63,8 +59,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.laravel }}-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.laravel }}-
+          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -75,11 +71,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: composer require "illuminate/auth:^${{ matrix.laravel }}" --prefer-stable --prefer-dist  -n -o &&
-          composer require "illuminate/config:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n -o &&
-          composer require "illuminate/database:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n -o &&
-          composer require "illuminate/support:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n -o &&
-          composer require "illuminate/translation:^${{ matrix.laravel }}" --prefer-stable --prefer-dist -n -o
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
 
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
