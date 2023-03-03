@@ -1,3 +1,7 @@
+# v4.2.0 (March 2, 2023)
+ * Add Laravel 10 support
+ * GitHub Action workflow update
+
 # v4.1.0 (January 17, 2023)
  * Upgrade away from deprecated GitHub Action tasks.
  * Upgrade away from deprecated `phpunit.xml` config.
