@@ -13,7 +13,7 @@ class LoggerArrayParserTest extends TestCase
         $this->assertEquals($expected, DataArrayParser::dedupe($input));
     }
 
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'empty' => [
