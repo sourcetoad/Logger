@@ -3,13 +3,13 @@ on:
   pull_request:
   push:
 jobs:
-  tests-80:
+  tests-82:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.0 ]
-        laravel: [ 9.0 ]
+        php: [ 8.2 ]
+        laravel: [ 10.0, 11.0 ]
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
     steps:
       - name: Checkout code
@@ -38,15 +38,15 @@ jobs:
         run: composer require "illuminate/auth:^${{ matrix.laravel }}" "illuminate/config:^${{ matrix.laravel }}" "illuminate/database:^${{ matrix.laravel }}" "illuminate/support:^${{ matrix.laravel }}" "illuminate/translation:^${{ matrix.laravel }}" --prefer-stable --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/phpunit
 
-  tests-81:
+  tests-83:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.1 ]
-        laravel: [ 9.0, 10.0 ]
+        php: [ 8.3 ]
+        laravel: [ 11.0 ]
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
     steps:
       - name: Checkout code
@@ -75,7 +75,7 @@ jobs:
         run: composer require "illuminate/auth:^${{ matrix.laravel }}" "illuminate/config:^${{ matrix.laravel }}" "illuminate/database:^${{ matrix.laravel }}" "illuminate/support:^${{ matrix.laravel }}" "illuminate/translation:^${{ matrix.laravel }}" --prefer-stable --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/phpunit
 
   code_styles:
     runs-on: ubuntu-latest
@@ -97,7 +97,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
           tools: composer:v2
           extensions: dom, curl, libxml, mbstring, zip, pcntl, gd, soap
           coverage: none

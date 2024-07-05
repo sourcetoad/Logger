@@ -23,8 +23,9 @@ This means that the method for storage must be efficient, unlike other packages 
 
 ### Laravel
 
-You are reading the documentation for 10.x and 9.x.
+You are reading the documentation for 10.x and 11.x.
 
+* If you're using Laravel 9 please see the docs for [4.x](https://github.com/sourcetoad/Logger/releases/tag/v4.0.0).
 * If you're using Laravel 6, 7 or 8 please see the docs for [3.x](https://github.com/sourcetoad/Logger/releases/tag/v3.0.1).
 * If you're using Laravel 5 or below please see docs for [1.x](https://github.com/sourcetoad/Logger/releases/tag/v1.3.0)
 
