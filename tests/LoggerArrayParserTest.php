@@ -4,16 +4,17 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger\Test;
 
 use Sourcetoad\Logger\Helpers\DataArrayParser;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class LoggerArrayParserTest extends TestCase
 {
-    /** @dataProvider dataProvider */
+    #[DataProvider('dataProvider')]
     public function testDedupeParser(array $input, array $expected): void
     {
         $this->assertEquals($expected, DataArrayParser::dedupe($input));
     }
 
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'empty' => [
