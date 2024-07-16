@@ -1,3 +1,7 @@
+# v5.0.0 (July 16, 2024)
+ * Add Laravel 11 support
+ * Drop PHP <= 8.1 support
+
 # v4.2.0 (March 2, 2023)
  * Add Laravel 10 support
  * GitHub Action workflow update
