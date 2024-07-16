@@ -1,5 +1,5 @@
 {
-    "name": "benjie-wd/logger",
+    "name": "sourcetoad/logger",
     "description": "Creating an audit of activity throughout an application.",
     "type": "library",
     "license": "MIT",
