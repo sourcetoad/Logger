@@ -25,7 +25,15 @@ class CreateLoggerTables extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('key_id', false, true)->nullable(true);
             $table->integer('route_id', false, true);
-            $table->integer('user_id', false, true)->nullable(true);
+            $table->addColumn(
+                config('activity-logger.user.foreign_key_type', 'bigInteger'),
+                'user_id',
+                [
+                    'autoIncrement' => false,
+                    'unsigned' => true
+                ]
+            )
+                ->nullable();
 
             $table->tinyInteger('type', false, true);
             $table->tinyInteger('verb', false, true);
@@ -57,7 +65,15 @@ class CreateLoggerTables extends Migration
             $table->bigInteger('activity_id', false, true);
             $table->mediumInteger('entity_type', false, true);
             $table->integer('entity_id', false, true);
-            $table->integer('user_id', false, true)->nullable(true);
+            $table->addColumn(
+                config('activity-logger.user.foreign_key_type', 'bigInteger'),
+                'user_id',
+                [
+                    'autoIncrement' => false,
+                    'unsigned' => true,
+                ]
+            )
+                ->nullable();
 
             $table
                 ->foreign('activity_id')
@@ -77,7 +93,15 @@ class CreateLoggerTables extends Migration
             $table->bigInteger('activity_id', false, true);
             $table->mediumInteger('entity_type', false, true);
             $table->integer('entity_id', false, true);
-            $table->integer('user_id', false, true)->nullable(true);
+            $table->addColumn(
+                config('activity-logger.user.foreign_key_type', 'bigInteger'),
+                'user_id',
+                [
+                    'autoIncrement' => false,
+                    'unsigned' => true,
+                ]
+            )
+                ->nullable();
 
             $table->json('fields');
 

@@ -15,6 +15,7 @@ return [
     'user' => [
         'table'       => 'users',
         'foreign_key' => 'id',
+        'foreign_key_type' => 'bigInteger',
     ],
 
     /*
