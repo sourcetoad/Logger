@@ -1,5 +1,5 @@
 {
-    "name": "sourcetoad/logger",
+    "name": "benjie-wd/logger",
     "description": "Creating an audit of activity throughout an application.",
     "type": "library",
     "license": "MIT",
@@ -17,11 +17,11 @@
     "require": {
         "ext-json": "*",
         "php": "^8.2|^8.3",
-        "illuminate/auth": "^9.0|^10.0|^11.0",
-        "illuminate/config": "^9.0|^10.0|^11.0",
-        "illuminate/database": "^9.0|^10.0|^11.0",
-        "illuminate/support": "^9.0|^10.0|^11.0",
-        "illuminate/translation": "^9.0|^10.0|^11.0"
+        "illuminate/auth": "^11.0",
+        "illuminate/config": "^11.0",
+        "illuminate/database": "^11.0",
+        "illuminate/support": "^11.0",
+        "illuminate/translation": "^11.0"
     },
     "autoload": {
         "psr-4": {
