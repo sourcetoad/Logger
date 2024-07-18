@@ -1,3 +1,6 @@
+# v5.0.1 (July 18, 2024)
+ * Remove throws on down methods for migrations.
+
 # v5.0.0 (July 16, 2024)
  * Add Laravel 11 support
  * Drop PHP <= 8.1 support
