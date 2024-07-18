@@ -15,6 +15,6 @@ class DropUnusedLoggerColumns extends Migration
 
     public function down(): void
     {
-        throw new BadMethodCallException('Reversing this migration is not supported.');
+        // Reversing this migration is not supported due to 1 way changes.
     }
 }
