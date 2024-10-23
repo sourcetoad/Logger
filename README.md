@@ -86,7 +86,7 @@ For this reason, we've developed the notion of custom resolvers. They must be im
 These custom resolvers don't run as items are entered, due to the load increase. This should arguably be queued, but easier on implementations for a command (cron) system. Use the Laravel Scheduler to execute our command.
 
 ```php
-$schedule->command('logger:audit-resolver')
+schedule::command('logger:audit-resolver')
     ->hourly()
     ->withoutOverlapping();
 ```
