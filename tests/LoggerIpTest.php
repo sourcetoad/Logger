@@ -5,7 +5,7 @@ namespace Sourcetoad\Logger\Test;
 
 use Sourcetoad\Logger\Models\AuditActivity;
 
-class LoggerIpTest extends Illuminate\Foundation\Testing\TestCase
+class LoggerIpTest extends TestCase
 {
 
     public function testIpV4(): void
