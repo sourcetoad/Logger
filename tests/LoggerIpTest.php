@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger\Test;
 
 use Sourcetoad\Logger\Models\AuditActivity;
+use Illuminate\Support\Facades\DB;
 
 class LoggerIpTest extends TestCase
 {
