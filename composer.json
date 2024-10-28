@@ -47,5 +47,5 @@
                 "Logger": "Sourcetoad\\Logger\\LoggerFacade"
             }
         }
-    },
+    }
 }
