@@ -23,6 +23,11 @@
         "illuminate/support": "^11.0",
         "illuminate/translation": "^11.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^9.5",
+        "phpunit/phpunit": "^11.2",
+        "squizlabs/php_codesniffer": "^3.10"
+    },
     "autoload": {
         "psr-4": {
             "Sourcetoad\\Logger\\": "src"
@@ -43,9 +48,4 @@
             }
         }
     },
-    "require-dev": {
-        "orchestra/testbench": "^9.5",
-        "phpunit/phpunit": "^11.2",
-        "squizlabs/php_codesniffer": "^3.10"
-    }
 }
