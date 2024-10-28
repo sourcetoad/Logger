@@ -4,12 +4,9 @@ declare(strict_types = 1);
 namespace Sourcetoad\Logger\Test;
 
 use Sourcetoad\Logger\Models\AuditActivity;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class LoggerIpTest extends TestCase
+class LoggerIpTest extends Illuminate\Foundation\Testing\TestCase
 {
-    use RefreshDatabase;
 
     public function testIpV4(): void
     {
