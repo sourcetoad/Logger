@@ -5,9 +5,12 @@ namespace Sourcetoad\Logger\Test;
 
 use Sourcetoad\Logger\Models\AuditActivity;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoggerIpTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testIpV4(): void
     {
         $address = '127.0.0.1';
