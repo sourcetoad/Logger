@@ -60,7 +60,7 @@ class CreateLoggerTables extends Migration
 
         if (DB::getDriverName() === 'pgsql') {
             // PostgreSQL-specific SQL
-            DB::statement('ALTER TABLE audit_activities ADD ip_address BYTEA');
+            DB::statement('ALTER TABLE audit_activities ADD ip_address INET');
         } else {
             // MySQL-specific SQL
             DB::statement('ALTER TABLE `audit_activities` ADD `ip_address` VARBINARY(16) AFTER `type`');
