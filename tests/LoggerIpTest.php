@@ -7,7 +7,6 @@ use Sourcetoad\Logger\Models\AuditActivity;
 
 class LoggerIpTest extends TestCase
 {
-
     public function testIpV4(): void
     {
         $address = '127.0.0.1';
