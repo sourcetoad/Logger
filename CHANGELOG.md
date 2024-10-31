@@ -1,3 +1,6 @@
+# v5.1.0 (October 31, 2024)
+* Add support for Postgres.
+
 # v5.0.1 (July 18, 2024)
  * Remove throws on down methods for migrations.
 
