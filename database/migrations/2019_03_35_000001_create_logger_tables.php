@@ -132,11 +132,11 @@ class CreateLoggerTables extends Migration
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::drop('audit_changes');
-        Schema::drop('audit_routes');
-        Schema::drop('audit_keys');
-        Schema::drop('audit_models');
-        Schema::drop('audit_activities');
+        Schema::dropIfExists('audit_models');
+        Schema::dropIfExists('audit_changes');
+        Schema::dropIfExists('audit_activities');
+        Schema::dropIfExists('audit_routes');
+        Schema::dropIfExists('audit_keys');
         Schema::enableForeignKeyConstraints();
     }
 }
