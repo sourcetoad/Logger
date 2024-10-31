@@ -58,7 +58,13 @@ class CreateLoggerTables extends Migration
                 ->onDelete('RESTRICT');
         });
 
-        DB::statement('ALTER TABLE `audit_activities` ADD `ip_address` VARBINARY(16) AFTER `type`');
+        if (DB::getDriverName() === 'pgsql') {
+            // PostgreSQL-specific SQL
+            DB::statement('ALTER TABLE audit_activities ADD ip_address INET');
+        } else {
+            // MySQL-specific SQL
+            DB::statement('ALTER TABLE `audit_activities` ADD `ip_address` VARBINARY(16) AFTER `type`');
+        }
 
         Schema::create('audit_models', function (Blueprint $table) {
             $table->bigIncrements('id');

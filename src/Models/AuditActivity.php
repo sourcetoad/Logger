@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\DB;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
 use Sourcetoad\Logger\Logger;
@@ -57,11 +58,19 @@ class AuditActivity extends BaseModel
 
     protected function setIpAddressAttribute(?string $value): void
     {
-        $this->attributes['ip_address'] = inet_pton((string)$value);
+        if (DB::getDriverName() === 'pgsql') {
+            $this->attributes['ip_address'] = $value;
+        } else {
+            $this->attributes['ip_address'] = inet_pton((string)$value);
+        }
     }
 
     protected function getIpAddressAttribute($value): string
     {
+        if (DB::getDriverName() === 'pgsql') {
+            return strtoupper($value);
+        }
+
         return strtoupper(inet_ntop($value));
     }
 
