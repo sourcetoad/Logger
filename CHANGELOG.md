@@ -1,3 +1,6 @@
+# v5.1.1 (October 31, 2024)
+* Fix down migration for create_logger_tables.
+
 # v5.1.0 (October 31, 2024)
 * Add support for Postgres.
 
