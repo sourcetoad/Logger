@@ -54,11 +54,11 @@ This will contain model maps, which can be read about below.
 Due to the large amount of records anticipated to be created, you must create an integer mapping to models in your system. We give an example as follows:
 
 ```php
-use Sourcetoad\Logger\Enums\ModelMapping;
  
 'morphs' => [
-   ModelMapping::USER => 'App\User'
+   0 => 'App\Models\User'
 ];
+
 ```
 
 This points our `App\User::class` to an enum (integer). This means our database is created with small integers vs large fully qualified namespaces.
