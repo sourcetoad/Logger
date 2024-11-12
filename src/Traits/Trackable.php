@@ -27,9 +27,9 @@ trait Trackable
         });
     }
 
-    public function trackableUserResolver(): ?int
+    public function trackableOwnerResolver(): ?Model
     {
-        throw new \BadMethodCallException('This method (trackableUserResolver) needs ' .
+        throw new \BadMethodCallException('This method (trackableOwnerResolver) needs ' .
             'to be implemented in the implemented class: ' . static::class);
     }
 }

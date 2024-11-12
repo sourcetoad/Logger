@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class AuditResolver
 {
-    public static function findUserId(?Model $model): ?int
+    public static function findOwner(?Model $model): ?Model
     {
         if (empty($model)) {
             return null;
         }
 
-        $id = $model->trackableUserResolver();
+        $owner = $model->trackableOwnerResolver();
 
-        if (empty($id)) {
+        if (empty($owner)) {
             return null;
         }
 
-        return $id;
+        return $owner;
     }
 }

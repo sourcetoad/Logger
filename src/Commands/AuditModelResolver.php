@@ -17,7 +17,7 @@ class AuditModelResolver extends Command
         AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditChange $item */
             foreach ($items as $item) {
-                $id = AuditResolver::findUserId($item->entity);
+                $id = AuditResolver::findOwner($item->entity)?->getKey();
                 $item->processed = true;
                 $item->user_id = $id;
                 $item->saveOrFail();
@@ -27,7 +27,7 @@ class AuditModelResolver extends Command
         AuditModel::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditModel $item */
             foreach ($items as $item) {
-                $id = AuditResolver::findUserId($item->entity);
+                $id = AuditResolver::findOwner($item->entity)?->getKey();
                 $item->processed = true;
                 $item->user_id = $id;
                 $item->saveOrFail();
