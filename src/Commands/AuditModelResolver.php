@@ -18,9 +18,11 @@ class AuditModelResolver extends Command
             /** @var AuditChange $item */
             foreach ($items as $item) {
                 $item->load('entity');
-                $id = AuditResolver::findOwner($item->entity)?->getKey();
+                $entity = AuditResolver::findOwner($item->entity);
+
                 $item->processed = true;
-                $item->user_id = $id;
+                $item->owner_id = $entity?->getKey();
+                $item->owner_type = $entity?->getMorphClass();
                 $item->saveOrFail();
             }
         });
@@ -29,9 +31,10 @@ class AuditModelResolver extends Command
             /** @var AuditModel $item */
             foreach ($items as $item) {
                 $item->load('entity');
-                $id = AuditResolver::findOwner($item->entity)?->getKey();
+                $entity = AuditResolver::findOwner($item->entity);
+
                 $item->processed = true;
-                $item->user_id = $id;
+                $item->user_id = $entity?->getKey();
                 $item->saveOrFail();
             }
         });
