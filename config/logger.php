@@ -26,6 +26,6 @@ return [
     |
     */
     'morphs' => [
-        0 => 'App\Models\User'
+        0 => App\Models\User::class,
     ]
 ];

@@ -1,6 +1,6 @@
 # Sourcetoad Logger
 
-This package allows you to log important events, including what data is viewed by who. Including the following:
+This package allows you to log important events, including what data is viewed by whom. Including the following:
 
  * Login Events
  * Logout Events
@@ -29,7 +29,7 @@ You are reading the documentation for 11.x.
 * If you're using Laravel 6, 7 or 8 please see the docs for [3.x](https://github.com/sourcetoad/Logger/releases/tag/v3.0.1).
 * If you're using Laravel 5 or below please see docs for [1.x](https://github.com/sourcetoad/Logger/releases/tag/v1.3.0)
 
-The currently supported database(s): `mysql`
+The currently supported database(s): `mysql`, `pgsql`
 
 You can install the package via composer:
 
@@ -56,12 +56,12 @@ Due to the large amount of records anticipated to be created, you must create an
 ```php
  
 'morphs' => [
-   0 => 'App\Models\User'
+    0 => App\Models\User::class
 ];
 
 ```
 
-This points our `App\User::class` to an enum (integer). This means our database is created with small integers vs large fully qualified namespaces.
+This points our `App\Models\User::class` to an enum (integer). This means our database is created with small integers vs large fully qualified namespaces.
 
 Recommended action is creating an enum class to describe all models in your system. If an integer mapping is not detected. The system will error out with an `/InvalidArgumentException`.
 
@@ -94,9 +94,9 @@ Schedule::command('logger:audit-resolver')
 This will run taking 200 items of both changes and retrieved models. It will identify the user associated with them. The functions for each individual model should be easy.
 
 ```php
-public function trackableUserResolver()
+public function trackableOwnerResolver()
 {
-    return $this->object->relation->user_id;
+    return $this->object->relation->owner();
 }
 ```
 
