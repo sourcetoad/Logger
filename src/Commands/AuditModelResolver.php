@@ -32,7 +32,8 @@ class AuditModelResolver extends Command
                 $owner = AuditResolver::findOwner($item->entity);
 
                 $item->processed = true;
-                $item->user_id = $owner?->getKey();
+                $item->owner_id = $owner?->getKey();
+                $item->owner_type = $owner?->getMorphClass();
                 $item->saveOrFail();
             }
         });
