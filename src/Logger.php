@@ -19,7 +19,7 @@ class Logger
     private static array $retrievedModels = [];
     private static array $changedModels = [];
 
-    public static string $userModel = 'App/User';
+    public static string $userModel = 'App/Models/User';
 
     public function logSuccessfulLogin(): AuditActivity
     {
