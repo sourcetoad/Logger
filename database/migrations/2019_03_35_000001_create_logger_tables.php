@@ -71,26 +71,13 @@ class CreateLoggerTables extends Migration
             $table->bigInteger('activity_id', false, true);
             $table->mediumInteger('entity_type', false, true);
             $table->integer('entity_id', false, true);
-            $table->addColumn(
-                config('activity-logger.user.foreign_key_type', 'bigInteger'),
-                'user_id',
-                [
-                    'autoIncrement' => false,
-                    'unsigned' => true,
-                ]
-            )
-                ->nullable();
+            $table->string('owner_type')->nullable();
+            $table->integer('owner_id', false, true)->nullable();
 
             $table
                 ->foreign('activity_id')
                 ->references('id')
                 ->on('audit_activities')
-                ->onDelete('RESTRICT');
-
-            $table
-                ->foreign('user_id')
-                ->references(config('activity-logger.user.foreign_key', 'id'))
-                ->on(config('activity-logger.user.table', 'users'))
                 ->onDelete('RESTRICT');
         });
 
@@ -99,15 +86,8 @@ class CreateLoggerTables extends Migration
             $table->bigInteger('activity_id', false, true);
             $table->mediumInteger('entity_type', false, true);
             $table->integer('entity_id', false, true);
-            $table->addColumn(
-                config('activity-logger.user.foreign_key_type', 'bigInteger'),
-                'user_id',
-                [
-                    'autoIncrement' => false,
-                    'unsigned' => true,
-                ]
-            )
-                ->nullable();
+            $table->string('owner_type')->nullable();
+            $table->integer('owner_id', false, true)->nullable();
 
             $table->json('fields');
 
@@ -115,12 +95,6 @@ class CreateLoggerTables extends Migration
                 ->foreign('activity_id')
                 ->references('id')
                 ->on('audit_activities')
-                ->onDelete('RESTRICT');
-
-            $table
-                ->foreign('user_id')
-                ->references(config('activity-logger.user.foreign_key', 'id'))
-                ->on(config('activity-logger.user.table', 'users'))
                 ->onDelete('RESTRICT');
         });
 
