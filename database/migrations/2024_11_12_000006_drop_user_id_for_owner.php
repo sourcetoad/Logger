@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('audit_changes', function (Blueprint $table) {
-            $table->mediumInteger('owner_type', false, true)->nullable();
+            $table->string('owner_type')->nullable();
             $table->integer('owner_id', false, true)->nullable();
 
             $table->dropColumn('user_id');

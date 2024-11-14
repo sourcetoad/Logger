@@ -17,12 +17,11 @@ class AuditModelResolver extends Command
         AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditChange $item */
             foreach ($items as $item) {
-                $item->load('entity');
-                $entity = AuditResolver::findOwner($item->entity);
+                $owner = AuditResolver::findOwner($item->entity);
 
                 $item->processed = true;
-                $item->owner_id = $entity?->getKey();
-                $item->owner_type = $entity?->getMorphClass();
+                $item->owner_id = $owner?->getKey();
+                $item->owner_type = $owner?->getMorphClass();
                 $item->saveOrFail();
             }
         });
@@ -30,11 +29,10 @@ class AuditModelResolver extends Command
         AuditModel::query()->where('processed', false)->chunkById(200, function ($items) {
             /** @var AuditModel $item */
             foreach ($items as $item) {
-                $item->load('entity');
-                $entity = AuditResolver::findOwner($item->entity);
+                $owner = AuditResolver::findOwner($item->entity);
 
                 $item->processed = true;
-                $item->user_id = $entity?->getKey();
+                $item->user_id = $owner?->getKey();
                 $item->saveOrFail();
             }
         });
