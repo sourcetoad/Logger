@@ -4,24 +4,28 @@ declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Models\Relations;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Sourcetoad\Logger\Models\BaseModel;
 
 /**
- * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
- * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
+ * @template TRelatedModel of Model
+ * @template TDeclaringModel of Model
  *
- * @extends \Illuminate\Database\Eloquent\Relations\BelongsTo<TRelatedModel, TDeclaringModel>
+ * @extends BelongsTo<TRelatedModel, TDeclaringModel>
  */
 class LoggerMorphTo extends MorphTo
 {
     /**
-     * Create a new model instance by type.
+     * Overrides `createModelByType` on the parent class, allowing `morphTo` calls on
+     * models extending Logger's `BaseModel` to map polymorphic relationships using the
+     * custom morph map.
      *
-     * @param  string  $type
+     * @param string $type
      * @return TRelatedModel
      */
-    public function createModelByType($type)
+    public function createModelByType($type): Model
     {
         $class = BaseModel::getActualClassNameForMorph($type);
 
