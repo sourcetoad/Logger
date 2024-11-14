@@ -52,7 +52,7 @@ class AuditChange extends BaseModel
     /** @return MorphTo<Model, self> */
     public function owner(): MorphTo
     {
-        return $this->morphTo('owner');
+        return $this->morphTo();
     }
 
     public function key(): BelongsTo
@@ -60,6 +60,7 @@ class AuditChange extends BaseModel
         return $this->belongsTo(AuditKey::class);
     }
 
+    /** @return MorphTo<Model, self> */
     public function entity(): MorphTo
     {
         return $this->morphTo();
