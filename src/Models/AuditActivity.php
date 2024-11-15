@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger\Models;
 
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -103,7 +103,7 @@ class AuditActivity extends BaseModel
             default => throw new Exception('Unknown enum type: ' . $this->type),
         };
     }
-    
+
     //--------------------------------------------------------------------------------------------------------------
     // Relations
     //--------------------------------------------------------------------------------------------------------------
