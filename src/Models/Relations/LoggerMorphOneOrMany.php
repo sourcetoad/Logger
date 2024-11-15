@@ -41,7 +41,8 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      * @param string $localKey
      * @return void
      */
-    public function __construct(Builder $query, Model $parent, $type, $id, $localKey) {
+    public function __construct(Builder $query, Model $parent, $type, $id, $localKey)
+    {
         $this->morphType = $type;
 
         $this->morphClass = $this->getLoggerMorphClass($parent);
@@ -135,9 +136,8 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     /** @inheritDoc */
     public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*']): Builder
     {
-        return parent::getRelationExistenceQuery($query, $parentQuery, $columns)->where(
-            $query->qualifyColumn($this->getMorphType()), $this->morphClass
-        );
+        return parent::getRelationExistenceQuery($query, $parentQuery, $columns)
+            ->where($query->qualifyColumn($this->getMorphType()), $this->morphClass);
     }
 
     /**
