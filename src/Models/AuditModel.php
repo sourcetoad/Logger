@@ -3,11 +3,8 @@ declare(strict_types = 1);
 
 namespace Sourcetoad\Logger\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Sourcetoad\Logger\Logger;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -20,7 +17,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int|null $owner_id
  * @property string|null $owner_type
  * @property bool $processed
- * @property-read User|null $user
+ * @property-read Model|null $owner
  * @property-read Model $entity
  */
 class AuditModel extends BaseModel
@@ -60,11 +57,13 @@ class AuditModel extends BaseModel
     // Relations
     //--------------------------------------------------------------------------------------------------------------
 
-    public function user(): BelongsTo
+    /** @return MorphTo<Model, self> */
+    public function owner(): MorphTo
     {
-        return $this->belongsTo(Logger::$userModel);
+        return $this->morphTo();
     }
 
+    /** @return MorphTo<Model, self> */
     public function entity(): MorphTo
     {
         return $this->morphTo();
