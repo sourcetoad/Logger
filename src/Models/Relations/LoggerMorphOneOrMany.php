@@ -66,7 +66,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      *
      * @return void
      */
-    public function addConstraints(): void
+    public function addConstraints()
     {
         if (static::$constraints) {
             $this->getRelationQuery()->where($this->morphType, $this->morphClass);
@@ -76,7 +76,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     }
 
     /** @inheritDoc */
-    public function addEagerConstraints(array $models): void
+    public function addEagerConstraints(array $models)
     {
         parent::addEagerConstraints($models);
 
@@ -89,7 +89,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      * @param array $attributes
      * @return TRelatedModel
      */
-    public function forceCreate(array $attributes = []): Model
+    public function forceCreate(array $attributes = [])
     {
         $attributes[$this->getForeignKeyName()] = $this->getParentKey();
         $attributes[$this->getMorphType()] = $this->morphClass;
@@ -103,7 +103,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      * @param TRelatedModel $model
      * @return void
      */
-    protected function setForeignAttributesForCreate(Model $model): void
+    protected function setForeignAttributesForCreate(Model $model)
     {
         $model->{$this->getForeignKeyName()} = $this->getParentKey();
 
@@ -120,7 +120,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      * @param array|null $update
      * @return int
      */
-    public function upsert(array $values, $uniqueBy, array $update = null): int
+    public function upsert(array $values, $uniqueBy, $update = null)
     {
         if (! empty($values) && ! is_array(reset($values))) {
             $values = [$values];
@@ -134,7 +134,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     }
 
     /** @inheritDoc */
-    public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*']): Builder
+    public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*'])
     {
         return parent::getRelationExistenceQuery($query, $parentQuery, $columns)
             ->where($query->qualifyColumn($this->getMorphType()), $this->morphClass);
@@ -145,7 +145,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      *
      * @return string
      */
-    public function getQualifiedMorphType(): string
+    public function getQualifiedMorphType()
     {
         return $this->morphType;
     }
@@ -155,7 +155,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
      *
      * @return string
      */
-    public function getMorphType(): string
+    public function getMorphType()
     {
         return last(explode('.', $this->morphType));
     }

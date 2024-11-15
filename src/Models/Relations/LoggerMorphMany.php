@@ -39,7 +39,7 @@ class LoggerMorphMany extends LoggerMorphOneOrMany
     }
 
     /** @inheritDoc */
-    public function getResults(): Collection
+    public function getResults()
     {
         return ! is_null($this->getParentKey())
             ? $this->query->get()
@@ -47,7 +47,7 @@ class LoggerMorphMany extends LoggerMorphOneOrMany
     }
 
     /** @inheritDoc */
-    public function initRelation(array $models, $relation): array
+    public function initRelation(array $models, $relation)
     {
         foreach ($models as $model) {
             $model->setRelation($relation, $this->related->newCollection());
@@ -57,13 +57,13 @@ class LoggerMorphMany extends LoggerMorphOneOrMany
     }
 
     /** @inheritDoc */
-    public function match(array $models, Collection $results, $relation): array
+    public function match(array $models, Collection $results, $relation)
     {
         return $this->matchMany($models, $results, $relation);
     }
 
     /** @inheritDoc */
-    public function forceCreate(array $attributes = []): Model
+    public function forceCreate(array $attributes = [])
     {
         $attributes[$this->getMorphType()] = $this->morphClass;
 

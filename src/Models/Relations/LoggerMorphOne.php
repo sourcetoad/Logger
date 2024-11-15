@@ -26,7 +26,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     use SupportsDefaultModels;
 
     /** @inheritDoc */
-    public function getResults(): ?Model
+    public function getResults()
     {
         if (is_null($this->getParentKey())) {
             return $this->getDefaultFor($this->parent);
@@ -36,7 +36,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     }
 
     /** @inheritDoc */
-    public function initRelation(array $models, $relation): array
+    public function initRelation(array $models, $relation)
     {
         foreach ($models as $model) {
             $model->setRelation($relation, $this->getDefaultFor($model));
@@ -46,13 +46,13 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     }
 
     /** @inheritDoc */
-    public function match(array $models, Collection $results, $relation): array
+    public function match(array $models, Collection $results, $relation)
     {
         return $this->matchOne($models, $results, $relation);
     }
 
     /** @inheritDoc */
-    public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*']): Builder
+    public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*'])
     {
         if ($this->isOneOfMany()) {
             $this->mergeOneOfManyJoinsTo($query);
@@ -69,7 +69,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
      * @param string|null $aggregate
      * @return void
      */
-    public function addOneOfManySubQueryConstraints(Builder $query, $column = null, $aggregate = null): void
+    public function addOneOfManySubQueryConstraints(Builder $query, $column = null, $aggregate = null)
     {
         $query->addSelect($this->foreignKey, $this->morphType);
     }
@@ -79,7 +79,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
      *
      * @return array|string
      */
-    public function getOneOfManySubQuerySelectColumns(): array|string
+    public function getOneOfManySubQuerySelectColumns()
     {
         return [$this->foreignKey, $this->morphType];
     }
@@ -90,7 +90,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
      * @param JoinClause $join
      * @return void
      */
-    public function addOneOfManyJoinSubQueryConstraints(JoinClause $join): void
+    public function addOneOfManyJoinSubQueryConstraints(JoinClause $join)
     {
         $join
             ->on($this->qualifySubSelectColumn($this->morphType), '=', $this->qualifyRelatedColumn($this->morphType))
@@ -103,7 +103,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
      * @param TDeclaringModel $parent
      * @return TRelatedModel
      */
-    public function newRelatedInstanceFor(Model $parent): Model
+    public function newRelatedInstanceFor(Model $parent)
     {
         return tap($this->related->newInstance(), function ($instance) use ($parent) {
             $instance->setAttribute($this->getForeignKeyName(), $parent->{$this->localKey})
@@ -119,7 +119,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
      * @param TRelatedModel $model
      * @return int|string
      */
-    protected function getRelatedKeyFrom(Model $model): int|string
+    protected function getRelatedKeyFrom(Model $model)
     {
         return $model->getAttribute($this->getForeignKeyName());
     }
