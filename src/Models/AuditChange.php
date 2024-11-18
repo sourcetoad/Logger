@@ -15,8 +15,8 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int $activity_id
  * @property int $entity_type
  * @property int $entity_id
- * @property int $owner_id
- * @property string $owner_type
+ * @property int|null $owner_type
+ * @property int|null $owner_id
  * @property int|null $key_id
  * @property bool $processed
  * @property-read AuditKey $key

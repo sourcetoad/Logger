@@ -71,7 +71,7 @@ class CreateLoggerTables extends Migration
             $table->bigInteger('activity_id', false, true);
             $table->mediumInteger('entity_type', false, true);
             $table->integer('entity_id', false, true);
-            $table->string('owner_type')->nullable();
+            $table->integer('owner_type')->nullable();
             $table->integer('owner_id', false, true)->nullable();
 
             $table
@@ -86,7 +86,7 @@ class CreateLoggerTables extends Migration
             $table->bigInteger('activity_id', false, true);
             $table->mediumInteger('entity_type', false, true);
             $table->integer('entity_id', false, true);
-            $table->string('owner_type')->nullable();
+            $table->integer('owner_type')->nullable();
             $table->integer('owner_id', false, true)->nullable();
 
             $table->json('fields');
