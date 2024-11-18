@@ -72,24 +72,25 @@ Recommended action is creating an enum class to describe all models in your syst
 This enforces the user to create shorthand notation for all models to cut down on database size. If a numeric morph is not found, the system will fail out. Due to issues with blindly overwriting and applying these morphs globally, they are manually applied. This means that morphs in your application are left untouched.
 
 #### Trackable Trait
-For models that may contain information that you wish to be notified was accessed/retrieved or mutated. You may add the `Trackable` trait to these models:
+For models that may contain information that you wish to be notified was accessed or mutated. You may add the `Trackable` trait and contract to these models:
 
 ```php
 use Illuminate\Database\Eloquent\Model;
+use Sourcetoad\Logger\Contracts\Trackable as TrackableContract;
 use Sourcetoad\Logger\Traits\Trackable;
   
-class TrackedModel extends Model {
+class TrackedModel extends Model implements TrackableContract {
     use Trackable;
     
-    // Models that use `Trackable` must implement this function
-    public function trackableOwnerResolver(): Owner
+    // Tracked models must implement this function
+    public function trackableOwnerResolver(): ?Model
     {
-        // ...
+        //
     }
 }
 ```
 
-The issue with this, is a record without a user association is frankly useless. However, you may access a record that has no foreign key or relation to a user model. Tracking that makes auditing quite useless.
+The issue with this, is a record without an owner association is frankly useless. However, you may access a record that has no foreign key or relation to its owner model. Tracking that makes auditing quite useless.
 
 For this reason, we've developed the notion of custom resolvers. They must be implemented for each Entity tracked, which (if tracked) must be in the `morphs` table in the above settings.
 
@@ -147,7 +148,7 @@ Schedule::command('logger:audit-resolver')
     ->withoutOverlapping();
 ```
 
-This will run taking 200 items of both changes and retrieved models. It will identify the owner associated with the model through the `Trackable` trait. The functions for each individual model should be easy.
+This will run taking 200 items of both changes and retrieved models. It will identify the owner associated with the model through the `Trackable` contract. The functions for each individual model should be easy.
 
 ```php
 public function trackableOwnerResolver(): Owner

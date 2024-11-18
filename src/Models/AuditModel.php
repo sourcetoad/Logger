@@ -5,6 +5,7 @@ namespace Sourcetoad\Logger\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Sourcetoad\Logger\Contracts\Trackable;
 use Sourcetoad\Logger\Traits\Immutable;
 
 /**
@@ -18,7 +19,7 @@ use Sourcetoad\Logger\Traits\Immutable;
  * @property int|null $owner_id
  * @property bool $processed
  * @property-read Model|null $owner
- * @property-read Model $entity
+ * @property-read Trackable $entity
  */
 class AuditModel extends BaseModel
 {
@@ -63,7 +64,7 @@ class AuditModel extends BaseModel
         return $this->morphTo();
     }
 
-    /** @return MorphTo<Model, self> */
+    /** @return MorphTo<Trackable, self> */
     public function entity(): MorphTo
     {
         return $this->morphTo();
