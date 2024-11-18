@@ -101,6 +101,7 @@ For models with the `Trackable` trait, you may add the `HasLoggerRelationships` 
 ```php
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Sourcetoad\Logger\Contracts\Trackable as TrackableContract;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditModel;
 use Sourcetoad\Logger\Models\Relations\LoggerMorphMany;
@@ -111,7 +112,7 @@ use Sourcetoad\Logger\Traits\HasLoggerRelationships;
  * @property-read Collection<int, AuditChange> $auditChanges
  * @property-read Collection<int, AuditModel> $auditModels
  */
-class TrackedModel extends Model {
+class TrackedModel extends Model implements TrackableContract {
     use Trackable;
     use HasLoggerRelationships;
     
