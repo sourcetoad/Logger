@@ -14,8 +14,8 @@ class AuditModelResolver extends Command
 
     public function handle(): void
     {
-        AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
-            /** @var AuditChange $item */
+        AuditChange::query()->where('processed', false)->with('entity')->chunkById(200, function ($items) {
+            /** @var AuditChange[] $items */
             foreach ($items as $item) {
                 $owner = AuditResolver::findOwner($item->entity);
 
@@ -26,8 +26,8 @@ class AuditModelResolver extends Command
             }
         });
 
-        AuditModel::query()->where('processed', false)->chunkById(200, function ($items) {
-            /** @var AuditModel $item */
+        AuditModel::query()->where('processed', false)->with('entity')->chunkById(200, function ($items) {
+            /** @var AuditModel[] $items */
             foreach ($items as $item) {
                 $owner = AuditResolver::findOwner($item->entity);
 
