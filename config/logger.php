@@ -1,7 +1,5 @@
 <?php
 
-use Sourcetoad\Logger\Enums\ModelMapping;
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -13,7 +11,7 @@ return [
     */
 
     'user' => [
-        'table'       => 'users',
+        'table' => 'users',
         'foreign_key' => 'id',
         'foreign_key_type' => 'bigInteger',
     ],
@@ -28,6 +26,7 @@ return [
     |
     */
     'morphs' => [
-        ModelMapping::USER => 'App\User'
-    ]
+        0 => App\Models\User::class,
+    ],
+
 ];

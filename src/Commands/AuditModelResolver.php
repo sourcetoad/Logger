@@ -14,22 +14,26 @@ class AuditModelResolver extends Command
 
     public function handle(): void
     {
-        AuditChange::query()->where('processed', false)->chunkById(200, function ($items) {
-            /** @var AuditChange $item */
+        AuditChange::query()->where('processed', false)->with('entity')->chunkById(200, function ($items) {
+            /** @var AuditChange[] $items */
             foreach ($items as $item) {
-                $id = AuditResolver::findUserId($item->entity);
+                $owner = AuditResolver::findOwner($item->entity);
+
                 $item->processed = true;
-                $item->user_id = $id;
+                $item->owner_id = $owner?->getKey();
+                $item->owner_type = $owner?->getMorphClass();
                 $item->saveOrFail();
             }
         });
 
-        AuditModel::query()->where('processed', false)->chunkById(200, function ($items) {
-            /** @var AuditModel $item */
+        AuditModel::query()->where('processed', false)->with('entity')->chunkById(200, function ($items) {
+            /** @var AuditModel[] $items */
             foreach ($items as $item) {
-                $id = AuditResolver::findUserId($item->entity);
+                $owner = AuditResolver::findOwner($item->entity);
+
                 $item->processed = true;
-                $item->user_id = $id;
+                $item->owner_id = $owner?->getKey();
+                $item->owner_type = $owner?->getMorphClass();
                 $item->saveOrFail();
             }
         });
