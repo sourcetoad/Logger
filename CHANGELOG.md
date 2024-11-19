@@ -1,8 +1,11 @@
+# v6.0.0 (November 19, 2024)
+ * Drop User model associations on tracked entities in favor of polymorphic "owner" associations.
+
 # v5.1.1 (October 31, 2024)
-* Fix down migration for create_logger_tables.
+ * Fix down migration for create_logger_tables.
 
 # v5.1.0 (October 31, 2024)
-* Add support for Postgres.
+ * Add support for Postgres.
 
 # v5.0.1 (July 18, 2024)
  * Remove throws on down methods for migrations.
