@@ -124,7 +124,7 @@ class Logger
 
                 $data[] = [
                     'activity_id' => $activity->id,
-                    'entity_type' => $this->getNumericMorphMap($model),
+                    'entity_type' => static::getNumericMorphMap($model),
                     'entity_id'   => $model->getKey(),
                     'key_id'      => $keys->id,
                     'processed'   => false,
@@ -156,7 +156,7 @@ class Logger
 
             $data[] = [
                 'activity_id' => $activity->id,
-                'entity_type' => $this->getNumericMorphMap($model),
+                'entity_type' => static::getNumericMorphMap($model),
                 'entity_id'   => $model->getKey(),
                 'processed'   => false,
             ];
@@ -171,7 +171,7 @@ class Logger
     // Private functions
     //--------------------------------------------------------------------------------------------------------------
 
-    private function getNumericMorphMap(Model $model): int
+    public static function getNumericMorphMap(Model $model): int
     {
         $fcqn = get_class($model);
         $morphMap = LoggerServiceProvider::$morphs;
