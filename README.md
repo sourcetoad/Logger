@@ -59,11 +59,14 @@ Due to the large amount of records anticipated to be created, you must create an
 return [
 
     'morphs' => [
-        0 => App\Models\User::class
+        1 => App\Models\User::class
     ],
 
 ];
 ```
+
+> [!CAUTION]
+> `0` is not a valid key for the morph map, as it will get resolved to `false` in Laravel's morphing logic.
 
 This points our `App\Models\User::class` to an enum (integer). This means our database is created with small integers vs large fully qualified namespaces.
 
