@@ -5,6 +5,7 @@ namespace Sourcetoad\Logger;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
+use InvalidArgumentException;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
 use Sourcetoad\Logger\Models\AuditActivity;
@@ -181,11 +182,19 @@ class Logger
             $morphableTypeId = array_search($fcqn, $morphMap, true);
         }
 
-        if (is_numeric($morphableTypeId)) {
-            return $morphableTypeId;
+        if (!is_numeric($morphableTypeId)) {
+            throw new InvalidArgumentException(
+                sprintf('%s has no numeric model map. Check `morphs` in Logger.', get_class($model)),
+            );
         }
 
-        throw new \InvalidArgumentException(get_class($model) . " has no numeric model map. Check `morphs` in Logger.");
+        if ($morphableTypeId === 0) {
+            throw new InvalidArgumentException(
+                sprintf('0 is not a valid morph map key for %s. Check `morphs` in Logger.', get_class($model)),
+            );
+        }
+
+        return $morphableTypeId;
     }
 
     private function getHttpVerb(string $verb): int
