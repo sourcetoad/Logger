@@ -3,6 +3,7 @@
 namespace Sourcetoad\Logger\Commands;
 
 use Illuminate\Console\Command;
+use Sourcetoad\Logger\Logger;
 use Sourcetoad\Logger\Helpers\AuditResolver;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditModel;
@@ -21,7 +22,7 @@ class AuditModelResolver extends Command
 
                 $item->processed = true;
                 $item->owner_id = $owner?->getKey();
-                $item->owner_type = $owner?->getMorphClass();
+                $item->owner_type = !is_null($owner) ? Logger::getNumericMorphMap($owner) : null;
                 $item->saveOrFail();
             }
         });
@@ -33,7 +34,7 @@ class AuditModelResolver extends Command
 
                 $item->processed = true;
                 $item->owner_id = $owner?->getKey();
-                $item->owner_type = $owner?->getMorphClass();
+                $item->owner_type = !is_null($owner) ? Logger::getNumericMorphMap($owner) : null;
                 $item->saveOrFail();
             }
         });

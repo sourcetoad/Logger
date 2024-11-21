@@ -5,6 +5,7 @@ namespace Sourcetoad\Logger;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
+use InvalidArgumentException;
 use Sourcetoad\Logger\Enums\ActivityType;
 use Sourcetoad\Logger\Enums\HttpVerb;
 use Sourcetoad\Logger\Models\AuditActivity;
@@ -124,7 +125,7 @@ class Logger
 
                 $data[] = [
                     'activity_id' => $activity->id,
-                    'entity_type' => $this->getNumericMorphMap($model),
+                    'entity_type' => static::getNumericMorphMap($model),
                     'entity_id'   => $model->getKey(),
                     'key_id'      => $keys->id,
                     'processed'   => false,
@@ -156,7 +157,7 @@ class Logger
 
             $data[] = [
                 'activity_id' => $activity->id,
-                'entity_type' => $this->getNumericMorphMap($model),
+                'entity_type' => static::getNumericMorphMap($model),
                 'entity_id'   => $model->getKey(),
                 'processed'   => false,
             ];
@@ -171,7 +172,7 @@ class Logger
     // Private functions
     //--------------------------------------------------------------------------------------------------------------
 
-    private function getNumericMorphMap(Model $model): int
+    public static function getNumericMorphMap(Model $model): int
     {
         $fcqn = get_class($model);
         $morphMap = LoggerServiceProvider::$morphs;
@@ -181,11 +182,19 @@ class Logger
             $morphableTypeId = array_search($fcqn, $morphMap, true);
         }
 
-        if (is_numeric($morphableTypeId)) {
-            return $morphableTypeId;
+        if (!is_numeric($morphableTypeId)) {
+            throw new InvalidArgumentException(
+                sprintf('%s has no numeric model map. Check `morphs` in Logger.', get_class($model)),
+            );
         }
 
-        throw new \InvalidArgumentException(get_class($model) . " has no numeric model map. Check `morphs` in Logger.");
+        if ($morphableTypeId === 0) {
+            throw new InvalidArgumentException(
+                sprintf('0 is not a valid morph map key for %s. Check `morphs` in Logger.', get_class($model)),
+            );
+        }
+
+        return $morphableTypeId;
     }
 
     private function getHttpVerb(string $verb): int
