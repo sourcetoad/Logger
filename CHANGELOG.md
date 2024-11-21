@@ -1,3 +1,7 @@
+# v6.0.1 (November 21, 2024)
+ * Add error checking and documentation to prevent morph maps from using a `0` key in the logger config.
+ * Fix an issue where `audit_changes.owner_type` and `audit_models.owner_type` were not properly set as integers.
+
 # v6.0.0 (November 19, 2024)
  * Drop User model associations on tracked entities in favor of polymorphic "owner" associations.
 
