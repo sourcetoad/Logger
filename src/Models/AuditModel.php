@@ -61,12 +61,12 @@ class AuditModel extends BaseModel
     /** @return MorphTo<Model, self> */
     public function owner(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
 
     /** @return MorphTo<Trackable, self> */
     public function entity(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
 }
