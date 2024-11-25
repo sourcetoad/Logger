@@ -9,13 +9,19 @@ use Sourcetoad\Logger\Contracts\Trackable;
 
 class AuditResolver
 {
-    public static function findOwner(?Trackable $model): ?Model
+    public static function findOwner(?Trackable $trackable): ?Model
     {
-        if (empty($model)) {
+        if (empty($trackable)) {
             return null;
         }
 
-        $owner = $model->trackableOwnerResolver();
+        $ownerRelationshipName = $trackable->getOwnerRelationshipName();
+
+        if ($ownerRelationshipName && $trackable instanceof Model) {
+            $trackable->loadMissing($ownerRelationshipName);
+        }
+
+        $owner = $trackable->trackableOwnerResolver();
 
         if (empty($owner)) {
             return null;

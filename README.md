@@ -74,7 +74,7 @@ Recommended action is creating an enum class to describe all models in your syst
 
 This enforces the user to create shorthand notation for all models to cut down on database size. If a numeric morph is not found, the system will fail out. Due to issues with blindly overwriting and applying these morphs globally, they are manually applied. This means that morphs in your application are left untouched.
 
-#### Trackable Trait
+#### Trackable Trait and Contract
 For models that may contain information that you wish to be notified was accessed or mutated. You may add the `Trackable` trait and contract to these models:
 
 ```php
@@ -85,7 +85,13 @@ use Sourcetoad\Logger\Traits\Trackable;
 class TrackedModel extends Model implements TrackableContract {
     use Trackable;
     
-    // Tracked models must implement this function
+    // Tracked models must implement these functions
+    
+    public function getOwnerRelationshipName(): ?string
+    {
+        //
+    }
+    
     public function trackableOwnerResolver(): ?Model
     {
         //
@@ -130,7 +136,7 @@ class TrackedModel extends Model implements TrackableContract {
     }
     
     /**
-     * Collection of accesses of this model
+     * Collection of access logs of this model
      * 
      * @return LoggerMorphMany<AuditModel>
      */
@@ -155,6 +161,11 @@ Schedule::command('logger:audit-resolver')
 This will run taking 200 items of both changes and retrieved models. It will identify the owner associated with the model through the `Trackable` contract. The functions for each individual model should be easy.
 
 ```php
+public function getOwnerRelationshipName(): string
+{
+    return 'object.relation.owner';
+}
+
 public function trackableOwnerResolver(): Owner
 {
     return $this->object->relation->owner;

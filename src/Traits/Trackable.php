@@ -27,5 +27,6 @@ trait Trackable
         });
     }
 
+    abstract public function getOwnerRelationshipName(): ?string;
     abstract public function trackableOwnerResolver(): ?Model;
 }
