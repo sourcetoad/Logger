@@ -15,12 +15,6 @@ class AuditResolver
             return null;
         }
 
-        $ownerRelationshipName = $trackable->getOwnerRelationshipName();
-
-        if ($ownerRelationshipName && $trackable instanceof Model) {
-            $trackable->loadMissing($ownerRelationshipName);
-        }
-
         $owner = $trackable->trackableOwnerResolver();
 
         if (empty($owner)) {

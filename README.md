@@ -172,4 +172,20 @@ public function trackableOwnerResolver(): Owner
 }
 ```
 
-As you can see, we have to traverse whatever relation/property we need in order to relate the model at hand to an owner. If there is no match, you probably shouldn't be logging it.
+As you can see, we have to traverse whatever relation/property we need in order to relate the model at hand to an owner.
+
+However, there may be cases where a tracked model is also the owner of that model. In those cases, there is no relation/property to traverse.
+
+```php
+public function getOwnerRelationshipName(): null
+{
+    return null;
+}
+
+public function trackableOwnerResolver(): TrackedModel
+{
+    return $this;
+}
+```
+
+If neither of these scenarios match, you probably shouldn't be logging it.
