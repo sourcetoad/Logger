@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger;
 
@@ -34,21 +35,21 @@ class LoggerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
             $this->commands([AuditModelResolver::class]);
         }
 
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'logger');
-        $this->mergeConfigFrom(__DIR__ . '/../config/logger.php', 'logger');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'logger');
+        $this->mergeConfigFrom(__DIR__.'/../config/logger.php', 'logger');
         $this->publishes([
-            __DIR__  . '/../config/logger.php' => config_path('logger.php')
+            __DIR__.'/../config/logger.php' => config_path('logger.php'),
         ], 'logger');
     }
 
     public function register(): void
     {
         $this->app->singleton(Logger::class, function () {
-            return new Logger();
+            return new Logger;
         });
 
         $this->app->alias(Logger::class, 'logger');

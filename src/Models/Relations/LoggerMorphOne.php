@@ -25,7 +25,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     use ComparesRelatedModels;
     use SupportsDefaultModels;
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function getResults()
     {
         if (is_null($this->getParentKey())) {
@@ -35,7 +35,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
         return $this->query->first() ?: $this->getDefaultFor($this->parent);
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function initRelation(array $models, $relation)
     {
         foreach ($models as $model) {
@@ -45,13 +45,13 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
         return $models;
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function match(array $models, Collection $results, $relation)
     {
         return $this->matchOne($models, $results, $relation);
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*'])
     {
         if ($this->isOneOfMany()) {
@@ -64,9 +64,9 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     /**
      * Add constraints for inner join subselect for one of many relationships.
      *
-     * @param Builder<TRelatedModel> $query
-     * @param string|null $column
-     * @param string|null $aggregate
+     * @param  Builder<TRelatedModel>  $query
+     * @param  string|null  $column
+     * @param  string|null  $aggregate
      * @return void
      */
     public function addOneOfManySubQueryConstraints(Builder $query, $column = null, $aggregate = null)
@@ -87,7 +87,6 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     /**
      * Add join query constraints for one of many relationships.
      *
-     * @param JoinClause $join
      * @return void
      */
     public function addOneOfManyJoinSubQueryConstraints(JoinClause $join)
@@ -100,7 +99,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     /**
      * Make a new related instance for the given model.
      *
-     * @param TDeclaringModel $parent
+     * @param  TDeclaringModel  $parent
      * @return TRelatedModel
      */
     public function newRelatedInstanceFor(Model $parent)
@@ -116,7 +115,7 @@ class LoggerMorphOne extends LoggerMorphOneOrMany implements SupportsPartialRela
     /**
      * Get the value of the model's foreign key.
      *
-     * @param TRelatedModel $model
+     * @param  TRelatedModel  $model
      * @return int|string
      */
     protected function getRelatedKeyFrom(Model $model)

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Traits;
 
@@ -26,12 +27,12 @@ trait HasRelationships
      * @template TRelatedModel of Model
      * @template TDeclaringModel of Model
      *
-     * @param Builder<TRelatedModel> $query
-     * @param TDeclaringModel $parent
-     * @param string $foreignKey
-     * @param string $ownerKey
-     * @param string $type
-     * @param string $relation
+     * @param  Builder<TRelatedModel>  $query
+     * @param  TDeclaringModel  $parent
+     * @param  string  $foreignKey
+     * @param  string  $ownerKey
+     * @param  string  $type
+     * @param  string  $relation
      * @return LoggerMorphTo<TRelatedModel, TDeclaringModel>
      */
     protected function newMorphTo(Builder $query, Model $parent, $foreignKey, $ownerKey, $type, $relation): MorphTo

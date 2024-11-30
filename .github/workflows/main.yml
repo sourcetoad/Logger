@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.2, 8.3 ]
+        php: [ 8.2, 8.3, 8.4 ]
         laravel: [ 11.0 ]
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
     steps:
@@ -69,4 +69,4 @@ jobs:
         run: composer install --no-suggest --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Run style check
-        run: vendor/bin/phpcs
+        run: vendor/bin/pint --test

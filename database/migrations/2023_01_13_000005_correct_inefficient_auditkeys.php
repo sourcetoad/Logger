@@ -13,7 +13,7 @@ return new class extends Migration
         AuditKey::query()->chunkById(1000, function (Collection $auditKeys) {
             $auditKeys->each(function (AuditKey $auditKey) {
                 // Since these are already keys. We cannot pass it through our existing functions.
-                $oldData = (array)json_decode($auditKey->data);
+                $oldData = (array) json_decode($auditKey->data);
 
                 // Since our code expects data, to obtain keys from. We must trick our existing keys to be values.
                 $flippedData = array_flip($oldData);
@@ -39,13 +39,13 @@ return new class extends Migration
                             ->where('key_id', $auditKey->id)
                             ->update(['key_id' => $existingAuditKey->id]);
 
-                        AuditKey::withoutEvents(fn() => $auditKey->delete());
+                        AuditKey::withoutEvents(fn () => $auditKey->delete());
                     } else {
                         // If we don't - we will update this record to change hash/blob and record the id/hash to prevent future queries during migration
                         $auditKey->data = $jsonBlob;
                         $auditKey->hash = $jsonMd5;
 
-                        AuditKey::withoutEvents(fn() => $auditKey->saveOrFail());
+                        AuditKey::withoutEvents(fn () => $auditKey->saveOrFail());
                     }
                 }
             });

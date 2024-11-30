@@ -30,7 +30,7 @@ class CreateLoggerTables extends Migration
                 'user_id',
                 [
                     'autoIncrement' => false,
-                    'unsigned' => true
+                    'unsigned' => true,
                 ]
             )
                 ->nullable();

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Traits;
 
@@ -28,5 +29,6 @@ trait Trackable
     }
 
     abstract public function getOwnerRelationshipName(): ?string;
+
     abstract public function trackableOwnerResolver(): ?Model;
 }
