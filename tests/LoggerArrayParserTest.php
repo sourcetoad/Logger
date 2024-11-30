@@ -1,15 +1,16 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Test;
 
-use Sourcetoad\Logger\Helpers\DataArrayParser;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Sourcetoad\Logger\Helpers\DataArrayParser;
 
 class LoggerArrayParserTest extends TestCase
 {
     #[DataProvider('dataProvider')]
-    public function testDedupeParser(array $input, array $expected): void
+    public function test_dedupe_parser(array $input, array $expected): void
     {
         $this->assertEquals($expected, DataArrayParser::dedupe($input));
     }
@@ -19,31 +20,31 @@ class LoggerArrayParserTest extends TestCase
         return [
             'empty' => [
                 'input' => [],
-                'expected' => []
+                'expected' => [],
             ],
             'single key' => [
                 'input' => [
-                    'username' => 'Foo'
+                    'username' => 'Foo',
                 ],
                 'expected' => [
-                    'username'
-                ]
+                    'username',
+                ],
             ],
             'rejected key' => [
                 'input' => [
-                    'data' => 'foo'
+                    'data' => 'foo',
                 ],
-                'expected' => []
+                'expected' => [],
             ],
             'multiple keys' => [
                 'input' => [
                     'username' => 'Foo',
-                    'password' => 'Bar'
+                    'password' => 'Bar',
                 ],
                 'expected' => [
                     'password',
                     'username',
-                ]
+                ],
             ],
             'sorted properties' => [
                 'input' => [
@@ -52,8 +53,8 @@ class LoggerArrayParserTest extends TestCase
                 ],
                 'expected' => [
                     'a',
-                    'z'
-                ]
+                    'z',
+                ],
             ],
             'duplicate properties' => [
                 'input' => [
@@ -63,17 +64,17 @@ class LoggerArrayParserTest extends TestCase
                     ],
                     1 => [
                         'first_name' => 'Name2',
-                        'last_name' => 'Last2'
+                        'last_name' => 'Last2',
                     ],
                     2 => [
                         'first_name' => 'Name3',
-                        'last_name' => 'Last3'
-                    ]
+                        'last_name' => 'Last3',
+                    ],
                 ],
                 'expected' => [
                     'first_name',
-                    'last_name'
-                ]
+                    'last_name',
+                ],
             ],
             'deeply nested property' => [
                 'input' => [
@@ -82,16 +83,16 @@ class LoggerArrayParserTest extends TestCase
                             0 => [
                                 'id' => 'Value',
                                 'person' => [
-                                    'updated_at' => 'Value'
-                                ]
-                            ]
-                        ]
-                    ]
+                                    'updated_at' => 'Value',
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 'expected' => [
                     'id',
-                    'person.updated_at'
-                ]
+                    'person.updated_at',
+                ],
             ],
             'deeply nested numeric property' => [
                 'input' => [
@@ -101,20 +102,20 @@ class LoggerArrayParserTest extends TestCase
                                 'id' => 'Value',
                                 'persons' => [
                                     0 => [
-                                        'updated_at' => 'Value'
+                                        'updated_at' => 'Value',
                                     ],
                                     1 => [
-                                        'updated_at' => 'Value'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                        'updated_at' => 'Value',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 'expected' => [
                     'id',
-                    'persons.updated_at'
-                ]
+                    'persons.updated_at',
+                ],
             ],
             'entries deeply nested w/ numerics and duplicates' => [
                 'input' => [
@@ -124,29 +125,29 @@ class LoggerArrayParserTest extends TestCase
                                 'response' => [
                                     'data' => [
                                         21 => [
-                                            'created_at' => 'Value'
-                                        ]
-                                    ]
-                                ]
-                            ]
+                                            'created_at' => 'Value',
+                                        ],
+                                    ],
+                                ],
+                            ],
                         ],
                         1 => [
                             'content' => [
                                 'response' => [
                                     'data' => [
                                         22 => [
-                                            'created_at' => 'Value'
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                            'created_at' => 'Value',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 'expected' => [
-                    'content.response.created_at'
-                ]
-            ]
+                    'content.response.created_at',
+                ],
+            ],
         ];
     }
 }

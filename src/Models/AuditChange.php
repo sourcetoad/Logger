@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Models;
 
@@ -11,7 +12,7 @@ use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditModel
- * @package Sourcetoad\Logger\Models
+ *
  * @property int $id
  * @property int $activity_id
  * @property int $entity_type

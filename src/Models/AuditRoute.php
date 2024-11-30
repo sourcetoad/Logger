@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Models;
 
@@ -7,7 +8,7 @@ use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditRoute
- * @package Sourcetoad\Logger\Models
+ *
  * @property int $id
  * @property string $route
  * @property string $route_hash
@@ -18,7 +19,7 @@ class AuditRoute extends BaseModel
 
     protected $fillable = [
         'route',
-        'route_hash'
+        'route_hash',
     ];
 
     public $timestamps = false;

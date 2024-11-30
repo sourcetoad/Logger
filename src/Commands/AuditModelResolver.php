@@ -4,8 +4,8 @@ namespace Sourcetoad\Logger\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Sourcetoad\Logger\Logger;
 use Sourcetoad\Logger\Helpers\AuditResolver;
+use Sourcetoad\Logger\Logger;
 use Sourcetoad\Logger\LoggerServiceProvider;
 use Sourcetoad\Logger\Models\AuditChange;
 use Sourcetoad\Logger\Models\AuditModel;
@@ -13,6 +13,7 @@ use Sourcetoad\Logger\Models\AuditModel;
 class AuditModelResolver extends Command
 {
     protected $signature = 'logger:audit-resolver';
+
     protected $description = 'Identifiers users associated with models/changes logged.';
 
     public function handle(): void
@@ -29,7 +30,7 @@ class AuditModelResolver extends Command
 
                     $item->processed = true;
                     $item->owner_id = $owner?->getKey();
-                    $item->owner_type = !is_null($owner) ? Logger::getNumericMorphMap($owner) : null;
+                    $item->owner_type = ! is_null($owner) ? Logger::getNumericMorphMap($owner) : null;
                     $item->saveOrFail();
                 }
             });
@@ -46,7 +47,7 @@ class AuditModelResolver extends Command
 
                     $item->processed = true;
                     $item->owner_id = $owner?->getKey();
-                    $item->owner_type = !is_null($owner) ? Logger::getNumericMorphMap($owner) : null;
+                    $item->owner_type = ! is_null($owner) ? Logger::getNumericMorphMap($owner) : null;
                     $item->saveOrFail();
                 }
             });
@@ -57,7 +58,7 @@ class AuditModelResolver extends Command
      */
     private function getOwnerMorphs(): array
     {
-        return collect(LoggerServiceProvider::$morphs)->mapWithKeys(fn(string $class) => [
+        return collect(LoggerServiceProvider::$morphs)->mapWithKeys(fn (string $class) => [
             $class => array_filter([(new $class)->getOwnerRelationshipName()]),
         ])->toArray();
     }

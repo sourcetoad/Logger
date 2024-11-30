@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Str;
-use Sourcetoad\Logger\LoggerServiceProvider;
 use RuntimeException;
+use Sourcetoad\Logger\LoggerServiceProvider;
 
 /**
  * An abstract class that replaces Eloquent's `MorphOneToMany` class, acting as a basis
@@ -34,11 +34,11 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     protected int $morphClass;
 
     /**
-     * @param Builder<TRelatedModel> $query
-     * @param TDeclaringModel $parent
-     * @param string $type
-     * @param string $id
-     * @param string $localKey
+     * @param  Builder<TRelatedModel>  $query
+     * @param  TDeclaringModel  $parent
+     * @param  string  $type
+     * @param  string  $id
+     * @param  string  $localKey
      * @return void
      */
     public function __construct(Builder $query, Model $parent, $type, $id, $localKey)
@@ -75,7 +75,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
         }
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function addEagerConstraints(array $models)
     {
         parent::addEagerConstraints($models);
@@ -86,7 +86,6 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     /**
      * Create a new instance of the related model. Allow mass-assignment.
      *
-     * @param array $attributes
      * @return TRelatedModel
      */
     public function forceCreate(array $attributes = [])
@@ -100,7 +99,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     /**
      * Set the foreign ID and type for creating a related model.
      *
-     * @param TRelatedModel $model
+     * @param  TRelatedModel  $model
      * @return void
      */
     protected function setForeignAttributesForCreate(Model $model)
@@ -115,9 +114,8 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
     /**
      * Insert new records or update the existing ones.
      *
-     * @param array $values
-     * @param array|string $uniqueBy
-     * @param array|null $update
+     * @param  array|string  $uniqueBy
+     * @param  array|null  $update
      * @return int
      */
     public function upsert(array $values, $uniqueBy, $update = null)
@@ -133,7 +131,7 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
         return parent::upsert($values, $uniqueBy, $update);
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function getRelationExistenceQuery(Builder $query, Builder $parentQuery, $columns = ['*'])
     {
         return parent::getRelationExistenceQuery($query, $parentQuery, $columns)
@@ -162,8 +160,6 @@ abstract class LoggerMorphOneOrMany extends HasOneOrMany
 
     /**
      * Get the class name of the parent model.
-     *
-     * @return int
      */
     public function getMorphClass(): int
     {
