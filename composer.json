@@ -24,7 +24,7 @@
         "illuminate/translation": "^11.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.18",
+        "laravel/pint": "^1.19",
         "orchestra/testbench": "^9.5",
         "phpunit/phpunit": "^11.2"
     },
