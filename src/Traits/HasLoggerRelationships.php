@@ -18,15 +18,15 @@ trait HasLoggerRelationships
      *
      * @template TRelatedModel of Model
      *
-     * @param class-string<TRelatedModel> $related
+     * @param  class-string<TRelatedModel>  $related
      * @return LoggerMorphMany<TRelatedModel, $this>
      */
     public function loggerMorphMany(
         string $related,
         string $name,
-        string $type = null,
-        string $id = null,
-        string $localKey = null,
+        ?string $type = null,
+        ?string $id = null,
+        ?string $localKey = null,
     ): LoggerMorphMany {
         $instance = $this->newRelatedInstance($related);
 
@@ -47,8 +47,8 @@ trait HasLoggerRelationships
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      *
-     * @param \Illuminate\Database\Eloquent\Builder<TRelatedModel> $query
-     * @param TDeclaringModel $parent
+     * @param  \Illuminate\Database\Eloquent\Builder<TRelatedModel>  $query
+     * @param  TDeclaringModel  $parent
      * @return LoggerMorphMany<TRelatedModel, TDeclaringModel>
      */
     protected function newLoggerMorphMany(
@@ -68,15 +68,15 @@ trait HasLoggerRelationships
      *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      *
-     * @param class-string<TRelatedModel> $related
+     * @param  class-string<TRelatedModel>  $related
      * @return LoggerMorphOne<TRelatedModel, $this>
      */
     public function loggerMorphOne(
         string $related,
         string $name,
-        string $type = null,
-        string $id = null,
-        string $localKey = null,
+        ?string $type = null,
+        ?string $id = null,
+        ?string $localKey = null,
     ): LoggerMorphOne {
         $instance = $this->newRelatedInstance($related);
 
@@ -97,8 +97,8 @@ trait HasLoggerRelationships
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      *
-     * @param \Illuminate\Database\Eloquent\Builder<TRelatedModel> $query
-     * @param TDeclaringModel $parent
+     * @param  \Illuminate\Database\Eloquent\Builder<TRelatedModel>  $query
+     * @param  TDeclaringModel  $parent
      * @return LoggerMorphOne<TRelatedModel, TDeclaringModel>
      */
     protected function newLoggerMorphOne(

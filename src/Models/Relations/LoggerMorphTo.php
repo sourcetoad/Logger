@@ -22,7 +22,7 @@ class LoggerMorphTo extends MorphTo
      * models extending Logger's `BaseModel` to map polymorphic relationships using the
      * custom morph map.
      *
-     * @param string $type
+     * @param  string  $type
      * @return TRelatedModel
      */
     public function createModelByType($type): Model

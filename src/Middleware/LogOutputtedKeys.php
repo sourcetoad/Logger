@@ -1,13 +1,14 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Middleware;
 
 use Closure;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Sourcetoad\Logger\Enums\ActivityType;
@@ -38,7 +39,7 @@ class LogOutputtedKeys
             $data = [];
         } else {
             $data = [];
-            Log::warning('Could not decode class to extract data keys: ' . get_class($response));
+            Log::warning('Could not decode class to extract data keys: '.get_class($response));
         }
 
         if ($request->method() === 'GET') {

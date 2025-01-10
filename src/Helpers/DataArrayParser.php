@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Helpers;
 
@@ -23,7 +24,7 @@ class DataArrayParser
                     '/(\.)+/',
                 ], [
                     '',
-                    '.'
+                    '.',
                 ], Str::remove($removableIndexPairs, $key));
 
                 return trim($purgedKey, '.');

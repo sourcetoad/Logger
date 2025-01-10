@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger;
 
@@ -18,6 +19,7 @@ class Logger
 {
     /** @var Model[] */
     private static array $retrievedModels = [];
+
     private static array $changedModels = [];
 
     public static string $userModel = App\Models\User::class;
@@ -28,7 +30,7 @@ class Logger
 
         // Set generic array of information utilized in this lookup.
         $keys = [
-            'email'         => '',
+            'email' => '',
             'password_hash' => '',
         ];
 
@@ -40,7 +42,7 @@ class Logger
         $type = ActivityType::LOGOUT;
 
         $keys = [
-            'id'    => '',
+            'id' => '',
             'email' => '',
         ];
 
@@ -70,7 +72,7 @@ class Logger
         $type = ActivityType::PASSWORD_CHANGE;
 
         $keys = [
-            'password_hash' => ''
+            'password_hash' => '',
         ];
 
         return $this->logActivity($type, $keys);
@@ -84,7 +86,7 @@ class Logger
     public function logChangedModel(Model $model, array $fields): void
     {
         static::$changedModels[] = [
-            'model'  => $model,
+            'model' => $model,
             'fields' => $fields,
         ];
     }
@@ -101,12 +103,12 @@ class Logger
         // If we have changed models. Make another entry for the changes.
         if (! empty(self::$changedModels)) {
             $data = [
-                'route_id'   => $routeId,
-                'key_id'     => $keyId,
-                'user_id'    => $userId,
-                'type'       => ActivityType::MODIFY_DATA,
+                'route_id' => $routeId,
+                'key_id' => $keyId,
+                'user_id' => $userId,
+                'type' => ActivityType::MODIFY_DATA,
                 'ip_address' => $ipAddress,
-                'verb'       => $verb,
+                'verb' => $verb,
             ];
 
             /** @var AuditActivity $activity */
@@ -126,9 +128,9 @@ class Logger
                 $data[] = [
                     'activity_id' => $activity->id,
                     'entity_type' => static::getNumericMorphMap($model),
-                    'entity_id'   => $model->getKey(),
-                    'key_id'      => $keys->id,
-                    'processed'   => false,
+                    'entity_id' => $model->getKey(),
+                    'key_id' => $keys->id,
+                    'processed' => false,
                 ];
             }
 
@@ -137,12 +139,12 @@ class Logger
         }
 
         $data = [
-            'route_id'    => $routeId,
-            'key_id'      => $keyId,
-            'user_id'     => $userId,
-            'type'        => $type,
-            'ip_address'  => $ipAddress,
-            'verb'        => $verb,
+            'route_id' => $routeId,
+            'key_id' => $keyId,
+            'user_id' => $userId,
+            'type' => $type,
+            'ip_address' => $ipAddress,
+            'verb' => $verb,
         ];
 
         /** @var AuditActivity $activity */
@@ -158,8 +160,8 @@ class Logger
             $data[] = [
                 'activity_id' => $activity->id,
                 'entity_type' => static::getNumericMorphMap($model),
-                'entity_id'   => $model->getKey(),
-                'processed'   => false,
+                'entity_id' => $model->getKey(),
+                'processed' => false,
             ];
         }
         AuditModel::query()->insert($data);
@@ -168,9 +170,9 @@ class Logger
         return $activity;
     }
 
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
     // Private functions
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
 
     public static function getNumericMorphMap(Model $model): int
     {
@@ -182,7 +184,7 @@ class Logger
             $morphableTypeId = array_search($fcqn, $morphMap, true);
         }
 
-        if (!is_numeric($morphableTypeId)) {
+        if (! is_numeric($morphableTypeId)) {
             throw new InvalidArgumentException(
                 sprintf('%s has no numeric model map. Check `morphs` in Logger.', get_class($model)),
             );

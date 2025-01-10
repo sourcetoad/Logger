@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Models;
 
@@ -9,7 +10,7 @@ use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditKey
- * @package Sourcetoad\Logger\Models
+ *
  * @property int $id
  * @property string $data
  * @property string $hash
@@ -25,9 +26,9 @@ class AuditKey extends BaseModel
 
     public $timestamps = false;
 
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
     // Mutators
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
 
     protected function setRouteAttribute($value): void
     {
@@ -39,9 +40,9 @@ class AuditKey extends BaseModel
         $this->attributes['hash'] = md5($jsonBlob);
     }
 
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
     // Functions
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
 
     public static function createOrFind(array $keys): AuditKey
     {
@@ -54,9 +55,9 @@ class AuditKey extends BaseModel
         $key = AuditKey::query()
             ->lockForUpdate()
             ->firstOrCreate([
-                'hash' => $jsonHash
+                'hash' => $jsonHash,
             ], [
-                'data' => $jsonBlob
+                'data' => $jsonBlob,
             ]);
 
         return $key;

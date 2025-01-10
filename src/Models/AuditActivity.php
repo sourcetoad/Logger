@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sourcetoad\Logger\Models;
 
@@ -16,7 +17,7 @@ use Sourcetoad\Logger\Traits\Immutable;
 
 /**
  * Class AuditActivity
- * @package Sourcetoad\Logger\Models
+ *
  * @property int $id
  * @property int $route_id
  * @property int $key_id
@@ -45,23 +46,23 @@ class AuditActivity extends BaseModel
         'entity_id',
         'type',
         'verb',
-        'ip_address'
+        'ip_address',
     ];
 
     protected $casts = [
-        'created_at' => 'datetime'
+        'created_at' => 'datetime',
     ];
 
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
     // Mutators
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
 
     protected function setIpAddressAttribute(?string $value): void
     {
         if (DB::getDriverName() === 'pgsql') {
             $this->attributes['ip_address'] = $value;
         } else {
-            $this->attributes['ip_address'] = inet_pton((string)$value);
+            $this->attributes['ip_address'] = inet_pton((string) $value);
         }
     }
 
@@ -100,13 +101,13 @@ class AuditActivity extends BaseModel
             ActivityType::PASSWORD_CHANGE => trans('logger::enums.activity_type_password_change'),
             ActivityType::GET_DATA => trans('logger::enums.activity_type_get_data'),
             ActivityType::MODIFY_DATA => trans('logger::enums.activity_type_modify_data'),
-            default => throw new Exception('Unknown enum type: ' . $this->type),
+            default => throw new Exception('Unknown enum type: '.$this->type),
         };
     }
 
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
     // Relations
-    //--------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
 
     public function route(): BelongsTo
     {
