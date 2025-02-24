@@ -23,7 +23,7 @@ This means that the method for storage must be efficient, unlike other packages 
 
 ### Laravel
 
-You are reading the documentation for 11.x.
+You are reading the documentation for Laravel 11.x and 12.x.
 
 * If you're using Laravel 9 or 10 please see the docs for [4.x](https://github.com/sourcetoad/Logger/releases/tag/v4.2.0).
 * If you're using Laravel 6, 7 or 8 please see the docs for [3.x](https://github.com/sourcetoad/Logger/releases/tag/v3.0.1).
