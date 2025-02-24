@@ -17,16 +17,16 @@
     "require": {
         "ext-json": "*",
         "php": "^8.2||^8.3||^8.4",
-        "illuminate/auth": "^11.0",
-        "illuminate/config": "^11.0",
-        "illuminate/database": "^11.0",
-        "illuminate/support": "^11.0",
-        "illuminate/translation": "^11.0"
+        "illuminate/auth": "^11.0|^12.0",
+        "illuminate/config": "^11.0|^12.0",
+        "illuminate/database": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0",
+        "illuminate/translation": "^11.0|^12.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.19",
-        "orchestra/testbench": "^9.5",
-        "phpunit/phpunit": "^11.2"
+        "laravel/pint": "1.21",
+        "orchestra/testbench": "^9.5|^10.0",
+        "phpunit/phpunit": "^11.5"
     },
     "autoload": {
         "psr-4": {
@@ -47,5 +47,14 @@
                 "Logger": "Sourcetoad\\Logger\\LoggerFacade"
             }
         }
+    },
+    "scripts": {
+        "check-code": [
+            "@lint",
+            "@test"
+        ],
+        "lint": "@php vendor/bin/pint --test",
+        "lint:fix": "@php vendor/bin/pint",
+        "test": "@php vendor/bin/phpunit"
     }
 }
