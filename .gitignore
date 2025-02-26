@@ -5,6 +5,7 @@ vendor/
 
 # phpunit
 .phpunit.result.cache
+.phpunit.cache
 
 # composer
 composer.lock
