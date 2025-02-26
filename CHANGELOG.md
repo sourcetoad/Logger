@@ -1,3 +1,7 @@
+# v6.2.0 (February 26, 2025)
+ * Add Laravel 12 support
+ * PHP 8.4 support
+
 # v6.1.0 (November 26, 2024)
  * Allow deleted entities and owners to be resolved when running the audit resolver command.
  * Prevent `LazyLoadingViolation` errors when running the audit resolver command.
