@@ -1,3 +1,8 @@
+# v7.0.0 (July 6, 2026)
+ * Add Laravel 13 support
+ * Add PHP 8.5 support
+ * Drop Laravel 11 support
+
 # v6.2.0 (February 26, 2025)
  * Add Laravel 12 support
  * PHP 8.4 support
